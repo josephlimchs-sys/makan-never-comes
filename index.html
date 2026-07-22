@@ -624,7 +624,7 @@ function reopenOrder(i){
 function loadCollected(key){ try{ return JSON.parse(localStorage.getItem(key))||[]; }catch(e){ return []; } }
 function addCollected(key, vals){ const s=new Set(loadCollected(key)); (Array.isArray(vals)?vals:[vals]).forEach(v=>{if(v)s.add(v);}); try{ localStorage.setItem(key, JSON.stringify([...s])); }catch(e){} }
 function passportHTML(){
-  const cats = CATS.filter(c=>c.key!=='all');
+  const cats = CATS.filter(c=>c.key!=='all' && c.key!=='premium');
   const got = loadCollected('mnc_cats');
   const flagEmoji = {chinese:'🥢',malay:'🌴',indian:'🍛',peranakan:'🌺',kopitiam:'☕'};
   return `<details class="acc"><summary><span>🎫 Hawker passport</span><em>${got.length}/${cats.length}</em></summary>
@@ -855,7 +855,7 @@ function closeTracker(){ document.getElementById('trackerOverlay').classList.rem
 
 function renderDelivered(order){
   const collected = loadCollected('mnc_cats');
-  const cats = CATS.filter(c=>c.key!=='all');
+  const cats = CATS.filter(c=>c.key!=='all' && c.key!=='premium');
   const modal = document.getElementById('trackerModal');
   modal.innerHTML = `
     <button class="modal-close" onclick="closeTracker()">✕</button>
