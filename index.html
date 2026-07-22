@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MakanNeverComes — order the makan, skip the bill</title>
+<title>Order Until Shiok — order the makan, skip the bill</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%230E5C57'/%3E%3Ccircle cx='32' cy='32' r='28' fill='none' stroke='%23E3A73D' stroke-width='3'/%3E%3Ctext x='32' y='42' font-size='34' text-anchor='middle'%3E%F0%9F%8D%9C%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -171,6 +171,8 @@
   .cust-opt.sel .cust-radio::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--red);}
   .cust-otext{flex:1;font-size:13.5px;}
   .cust-odelta{color:#8a8074;font-weight:700;font-size:12px;font-family:'Space Mono', monospace;}
+  .cust-remark{width:100%;min-height:60px;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font-family:'Work Sans', sans-serif;font-size:13px;color:var(--ink);resize:vertical;background:var(--enamel);}
+  .cust-remark:focus{outline:none;border-color:var(--teal);}
   .cust-foot{display:flex;align-items:center;gap:12px;margin-top:14px;}
   .cust-qty{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--enamel);}
   .cust-qty button{border:none;background:none;color:var(--red);font-size:1.2rem;font-weight:700;cursor:pointer;}
@@ -221,7 +223,7 @@
 
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="brand">🍜 MakanNeverComes <span class="badge">v2</span></div>
+    <div class="brand">🍜 Order Until Shiok <span class="badge">v2</span></div>
     <div class="topbar-right">
       <span class="hide-mobile" id="locLabel">📍 Deliver to: your void deck · 12 min</span>
       <button class="cart-btn" onclick="openCart()">🧾 Chit <span class="cart-count" id="cartCount">0</span></button>
@@ -243,7 +245,7 @@
     <div class="hero-stats">
       <div><b id="statOrders">0</b>orders "delivered"</div>
       <div><b>$0.00</b>spent, forever</div>
-      <div><b>39</b>stalls open now</div>
+      <div><b>40</b>stalls open now</div>
     </div>
   </div>
   <div class="hero-visual">
@@ -264,7 +266,7 @@
 <div class="section" id="menu-section">
   <span class="section-label">step 01 · the (free) menu</span>
   <h2>The hawker centre 🏮</h2>
-  <p class="sub">Thirty-nine dishes, six cuisines — Peking duck, mala abalone steamboat, and lobster join the legendary ATAS tier. Prices update live and mean nothing.</p>
+  <p class="sub">Forty dishes, six cuisines — ribeye steak now joins the legendary ATAS tier. Prices update live and mean nothing.</p>
   <div class="tabs" id="tabs"></div>
 </div>
 <div class="menu-grid" id="menuGrid"></div>
@@ -283,7 +285,7 @@
 </div>
 
 <footer>
-  <div class="brand-mini">🍜 MakanNeverComes</div>
+  <div class="brand-mini">🍜 Order Until Shiok</div>
   <p>All the dopamine of ordering supper, none of the spending. No real food, no real payment, no real GST.</p>
   <button class="teh-o-btn" onclick="openTehO()"><span class="glass">🍵</span> Buy me a teh-o</button>
 </footer>
@@ -294,7 +296,7 @@
     <div class="chit-perf"></div>
     <div class="chit-head">
       <h3>ORDER CHIT #<span id="chitNo">0088</span></h3>
-      <p>MAKANNEVERCOMES · VOID DECK BRANCH</p>
+      <p>ORDER UNTIL SHIOK · VOID DECK BRANCH</p>
       <button class="chit-close" onclick="closeCart()">✕</button>
     </div>
     <div class="chit-items" id="chitItems"></div>
@@ -321,7 +323,7 @@
     <p class="sub">Card details pre-filled. Nothing here is real.</p>
     <div class="addr-block"><b>📍 Deliver to</b><span id="addrText">Blk 88 Void Deck Ave, #08-88</span></div>
     <div class="fake-card">
-      <div>MAKANNEVERCOMES CARD</div>
+      <div>ORDER UNTIL SHIOK CARD</div>
       <div class="num">4888 •••• •••• 0088</div>
       <div class="row"><span>CARD HOLDER<br>YOUR NAME HERE</span><span>EXP<br>12/88</span></div>
     </div>
@@ -368,10 +370,10 @@ const DISHES = [
   {id:2, cat:'chinese', emoji:'🍜', img:'images/char_kway_teow.jpg', name:'Char kway teow', stall:"Wok Hei Corner", desc:'Flat rice noodles, cockles, lap cheong, dark soy.', price:5.00},
   {id:3, cat:'chinese', emoji:'🍲', img:'images/bak_chor_mee.jpg', name:'Bak chor mee', stall:"Ah Kow Noodle House", desc:'Minced pork noodles, vinegar, chilli, pork lard.', price:4.80},
   {id:4, cat:'chinese', emoji:'🦐', img:WM+'Singapore_style_Hokkien_mee.jpg', name:'Hokkien mee', stall:"Geylang Prawn Mee", desc:'Prawn stock noodles, squid, pork belly.', price:5.50},
-  {id:5, cat:'chinese', emoji:'🦀', img:'images/chilli_crab.jpg', name:'Chilli crab', stall:"East Coast Seafood", desc:'Whole crab, tomato-chilli gravy, fried mantou.', price:38.00},
+  {id:5, cat:'chinese', emoji:'🦀', img:'images/chilli_crab.jpg', name:'Chilli crab', stall:"East Coast Seafood", desc:'Whole crab, tomato-chilli gravy, fried mantou.', price:38.00, extraOpts:[["Mantou (fried bun)",[["No mantou",0],["4pc mantou",2.00],["8pc mantou",3.80],["12pc mantou",5.50]],1]]},
   {id:6, cat:'peranakan', emoji:'🍲', img:'images/laksa.jpg', name:'Laksa', stall:"Katong Laksa House", desc:'Coconut curry noodles, prawns, fish cake, laksa leaf.', price:6.00},
   {id:7, cat:'peranakan', emoji:'🥘', img:'images/ayam_buah_keluak.jpg', name:'Ayam buah keluak', stall:"Nyonya Kitchen", desc:'Chicken stewed with black nut, tamarind, spices.', price:9.50},
-  {id:8, cat:'peranakan', emoji:'🥗', img:WM+'Fruit_Rojak.jpg', name:'Rojak', stall:"Fruit & Prawn Paste Corner", desc:'Fruit, cucumber, tau pok, thick prawn paste dressing.', price:4.00},
+  {id:8, cat:'peranakan', emoji:'🥗', img:'images/rojak.jpg', name:'Rojak', stall:"Fruit & Prawn Paste Corner", desc:'Fruit, cucumber, tau pok, thick prawn paste dressing.', price:4.00},
   {id:9, cat:'malay', emoji:'🍛', img:'images/nasi_lemak.jpeg', name:'Nasi lemak', stall:"Auntie Timah's", desc:'Coconut rice, ikan bilis, egg, sambal, fried chicken.', price:4.50},
   {id:10, cat:'malay', emoji:'🍢', img:WM+'Satay_with_Nasi_Impit.jpg', name:'Satay (10pc)', stall:"Lorong Satay Club", desc:'Chicken and beef skewers, peanut sauce, ketupat.', price:8.00},
   {id:11, cat:'malay', emoji:'🍜', img:WM+'Mie_Rebus_Medan.jpg', name:'Mee rebus', stall:"Geylang Serai Stall", desc:'Yellow noodles, thick sweet potato gravy, egg.', price:5.00},
@@ -393,7 +395,7 @@ const DISHES = [
   {id:27, cat:'premium', emoji:'🍖', img:US('1773417325310-cc9c9bef75e7'), name:'Lamb Shank Rendang', stall:"The Chef's Table", desc:'Slow-braised lamb shank in rich rendang gravy, fall-off-the-bone tender.', price:42.00},
   {id:28, cat:'premium', emoji:'🦞', img:US('1694537583728-c4da14026f8e'), name:'Whole Boston Lobster Noodles', stall:"The Chef's Table", desc:'Whole butter-poached lobster over e-fu noodles, roe butter sauce.', price:128.00},
   {id:29, cat:'premium', emoji:'🥩', img:US('1574095443374-6748e7dd6c84'), name:'A5 Wagyu Beef Rice Bowl', stall:"The Chef's Table", desc:'Seared A5 Japanese wagyu over garlic fried rice, onsen egg.', price:68.00},
-  {id:30, cat:'premium', emoji:'🍄', img:US('1755677617146-9d69ea16b199'), name:'Black Truffle Fried Rice', stall:"The Chef's Table", desc:'Wok-fried rice, shaved black truffle, crab meat, gold leaf.', price:58.00},
+  {id:30, cat:'premium', emoji:'🍄', img:'images/black_truffle_fried_rice.jpeg', name:'Black Truffle Fried Rice', stall:"The Chef's Table", desc:'Wok-fried rice, shaved black truffle, crab meat, gold leaf.', price:58.00},
   {id:31, cat:'premium', emoji:'🦆', img:US('1758972574371-57cf8c42bae8'), name:'Pan-Seared Foie Gras', stall:"The Chef's Table", desc:'Torched foie gras, brioche toast, fig reduction, sea salt.', price:48.00},
   {id:32, cat:'premium', emoji:'🍣', img:US('1635452065566-9c89471bb86c'), name:'Omakase Sushi Platter', stall:"Edomae Sushi Bar", desc:"Chef's choice nigiri selection, seasonal catch, hand-pressed rice.", price:168.00},
   {id:33, cat:'premium', emoji:'🌊', img:US('1541350013829-75d00d6c8578'), name:'Uni (Sea Urchin) Sashimi', stall:"Edomae Sushi Bar", desc:'Fresh Hokkaido sea urchin roe, shiso leaf, dash of soy.', price:38.00},
@@ -403,6 +405,7 @@ const DISHES = [
   {id:37, cat:'premium', emoji:'🦆', img:'images/peking_duck.jpg', name:'Peking Duck', stall:"The Chef's Table", desc:'Crispy lacquered duck skin, thin pancakes, cucumber, spring onion, hoisin.', price:78.00},
   {id:38, cat:'premium', emoji:'🌶️', img:'images/mala_steamboat.jpg', name:'Mala Steamboat with Abalone', stall:"The Chef's Table", desc:'Numbing-spicy Sichuan broth, whole abalone, seafood and mushrooms, tableside.', price:88.00},
   {id:39, cat:'premium', emoji:'🦞', img:US('1707995546408-9815c70dd5c4'), name:'Lobster Bliss', stall:"The Chef's Table", desc:'Whole lobster, garlic butter, cheese gratin, herb crust, char-grilled.', price:118.00},
+  {id:40, cat:'premium', emoji:'🥩', img:'images/ribeye_steak.jpg', name:'Ribeye Steak', stall:"The Chef's Table", desc:'Pan-seared prime ribeye, rosemary butter baste, cracked pepper crust.', price:68.00},
 ];
 const CATS = [
   {key:'all', label:'All stalls'},{key:'premium', label:'💎 ATAS'},
@@ -415,6 +418,8 @@ const OPT_GROUPS = [
   ["Portion",[["Regular",0],["Big portion (da bao)",1.50]],0],
   ["Add-on",[["None",0],["Extra egg",0.80],["Extra meat",1.80]],0],
 ];
+// returns the full set of customisation groups for a dish, including any dish-specific extras (e.g. mantou for chilli crab)
+function getGroups(d){ return d.extraOpts ? OPT_GROUPS.concat(d.extraOpts) : OPT_GROUPS; }
 
 let activeCat = 'all';
 let cart = {}; // key -> {dishId, opts:[i,i,i], qty}
@@ -447,21 +452,24 @@ function renderMenu(){
 let custState = null;
 function openCustomize(dishId){
   const d = DISHES.find(x=>x.id===dishId);
-  custState = {dishId, sel: OPT_GROUPS.map(g=>g[2]), qty:1};
+  const groups = getGroups(d);
+  custState = {dishId, sel: groups.map(g=>g[2]), qty:1, remark:''};
   renderCustomize(d);
   document.getElementById('custOverlay').classList.add('open');
 }
 function lineTotal(d){
-  return OPT_GROUPS.reduce((t,g,gi)=> t+g[1][custState.sel[gi]][1], d.price);
+  const groups = getGroups(d);
+  return groups.reduce((t,g,gi)=> t+g[1][custState.sel[gi]][1], d.price);
 }
 function renderCustomize(d){
+  const groups = getGroups(d);
   const t = lineTotal(d);
   document.getElementById('custModal').innerHTML = `
     <button class="modal-close" onclick="closeCustomize()">✕</button>
     <div class="cust-photo"><img src="${d.img}" alt="${d.name}" onerror="this.parentElement.style.display='none'"></div>
     <p class="cust-name" style="text-align:center;">${d.name}</p>
     <p class="sub" style="text-align:center;">${d.desc}</p>
-    ${OPT_GROUPS.map((g,gi)=>`
+    ${groups.map((g,gi)=>`
       <div class="cust-group">
         <div class="cust-glabel">${g[0]}</div>
         ${g[1].map(([label,delta],oi)=>`
@@ -471,6 +479,10 @@ function renderCustomize(d){
             <span class="cust-odelta">${delta>0?'+ '+money(delta):''}</span>
           </label>`).join('')}
       </div>`).join('')}
+    <div class="cust-group">
+      <div class="cust-glabel">Remarks (optional)</div>
+      <textarea id="custRemark" class="cust-remark" placeholder="e.g. no coriander, less oil, extra spicy..." oninput="custState.remark=this.value">${custState.remark||''}</textarea>
+    </div>
     <div class="cust-foot">
       <div class="cust-qty">
         <button onclick="custQty(-1)">−</button><span>${custState.qty}</span><button onclick="custQty(1)">+</button>
@@ -483,9 +495,11 @@ function custQty(delta){ custState.qty=Math.max(1,custState.qty+delta); renderCu
 function closeCustomize(){ document.getElementById('custOverlay').classList.remove('open'); }
 function confirmAddToCart(){
   const d = DISHES.find(x=>x.id===custState.dishId);
-  const key = custState.dishId+'|'+custState.sel.join(',');
-  const optsLabel = OPT_GROUPS.map((g,gi)=>g[1][custState.sel[gi]][0]).filter((label,gi)=>OPT_GROUPS[gi][1][custState.sel[gi]][1]!==0 || custState.sel[gi]!==OPT_GROUPS[gi][2]).join(' · ');
-  if(!cart[key]) cart[key] = {dishId:custState.dishId, sel:custState.sel.slice(), opts: optsLabel || 'Regular', qty:0};
+  const groups = getGroups(d);
+  const remark = (custState.remark||'').trim();
+  const key = custState.dishId+'|'+custState.sel.join(',')+'|'+remark;
+  const optsLabel = groups.map((g,gi)=>g[1][custState.sel[gi]][0]).filter((label,gi)=>groups[gi][1][custState.sel[gi]][1]!==0 || custState.sel[gi]!==groups[gi][2]).join(' · ');
+  if(!cart[key]) cart[key] = {dishId:custState.dishId, sel:custState.sel.slice(), opts: optsLabel || 'Regular', remark, qty:0};
   cart[key].qty += custState.qty;
   updateCartUI();
   closeCustomize();
@@ -504,7 +518,8 @@ function changeQty(key, delta){
 
 function itemUnitPrice(item){
   const d = DISHES.find(x=>x.id===item.dishId);
-  return OPT_GROUPS.reduce((t,g,gi)=> t+g[1][item.sel[gi]][1], d.price);
+  const groups = getGroups(d);
+  return groups.reduce((t,g,gi)=> t+g[1][item.sel[gi]][1], d.price);
 }
 
 function updateCartUI(){
@@ -520,10 +535,11 @@ function updateCartUI(){
     html = entries.map(([key,item])=>{
       const d = DISHES.find(x=>x.id===item.dishId);
       const unit = itemUnitPrice(item);
+      const safeKey = key.replace(/'/g, "\\'");
       return `<div class="chit-row">
         <div class="thumb"><img src="${d.img}" alt="" onerror="this.remove()"></div>
-        <div class="name-opts">${d.name}<span class="opts-sub">${item.opts}</span></div>
-        <span class="qty-ctrl"><button onclick="changeQty('${key}',-1)">–</button>${item.qty}<button onclick="changeQty('${key}',1)">+</button></span>
+        <div class="name-opts">${d.name}<span class="opts-sub">${item.opts}${item.remark?' · 📝 '+item.remark:''}</span></div>
+        <span class="qty-ctrl"><button onclick="changeQty('${safeKey}',-1)">–</button>${item.qty}<button onclick="changeQty('${safeKey}',1)">+</button></span>
         <span>$${(unit*item.qty).toFixed(2)}</span>
       </div>`;
     }).join('');
@@ -701,7 +717,7 @@ function pay(){
   const catsOrdered = [...new Set(entries.map(([,it])=>DISHES.find(x=>x.id===it.dishId).cat))];
   addCollected('mnc_cats', catsOrdered);
   const order = {
-    no: '#MNC'+(1000+Math.floor(Math.random()*9000)),
+    no: '#OTS'+(1000+Math.floor(Math.random()*9000)),
     total, items, done:false,
     stallCat: catsOrdered.map(c=>CATS.find(x=>x.key===c).label).join(', '),
     placedAt: Date.now(), durSecs: (2+Math.floor(Math.random()*3))*60,
