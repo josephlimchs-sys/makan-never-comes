@@ -101,6 +101,16 @@
 
   footer{text-align:center;padding:40px 24px 50px;color:#8a8074;font-size:13px;}
   footer .brand-mini{font-family:'Baloo 2', sans-serif;color:var(--teal-dark);font-weight:700;font-size:18px;margin-bottom:8px;}
+  .teh-o-btn{display:inline-flex;align-items:center;gap:9px;background:var(--teal);color:var(--enamel);border:none;border-radius:999px;padding:12px 22px;font-weight:700;font-size:14.5px;cursor:pointer;font-family:'Baloo 2', sans-serif;margin-top:14px;}
+  .teh-o-btn:hover{background:var(--teal-dark);}
+  .teh-o-btn .glass{font-size:18px;}
+  .teho-tiers{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0 4px;}
+  .teho-tier{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--cream);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer;font-family:'Work Sans', sans-serif;text-decoration:none;color:var(--ink);min-width:84px;}
+  .teho-tier:hover{border-color:var(--teal);background:#E9F2EF;}
+  .teho-tier .emoji{font-size:26px;}
+  .teho-tier .label{font-family:'Baloo 2', sans-serif;font-weight:700;font-size:13px;}
+  .teho-tier .price{font-family:'Space Mono', monospace;font-size:11.5px;color:#8a8074;}
+  .teho-note{text-align:center;font-size:12px;color:#8a8074;margin-top:6px;}
 
   .overlay{position:fixed;inset:0;background:rgba(36,31,26,0.45);z-index:100;display:none;align-items:stretch;justify-content:flex-end;}
   .overlay.open{display:flex;}
@@ -271,6 +281,7 @@
 <footer>
   <div class="brand-mini">🍜 MakanNeverComes</div>
   <p>All the dopamine of ordering supper, none of the spending. No real food, no real payment, no real GST.</p>
+  <button class="teh-o-btn" onclick="openTehO()"><span class="glass">🍵</span> Buy me a teh-o</button>
 </footer>
 
 <!-- CART OVERLAY -->
@@ -327,6 +338,27 @@
     <h3>🃏 Your Couriers</h3>
     <p class="sub" id="courierSub"></p>
     <div class="courier-grid" id="courierGrid"></div>
+  </div>
+</div>
+
+<!-- TEH-O SUPPORT MODAL -->
+<div class="modal-overlay" id="tehOOverlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeTehO()">✕</button>
+    <h3>🍵 Buy me a teh-o</h3>
+    <p class="sub">This site's free and always will be. If it gave you a little dopamine hit, a teh-o keeps the imaginary kitchen (and the real developer) going.</p>
+    <div class="teho-tiers">
+      <a class="teho-tier" href="https://ko-fi.com/YOUR_KOFI_HANDLE" target="_blank" rel="noopener">
+        <span class="emoji">🍵</span><span class="label">Teh-o</span><span class="price">$2</span>
+      </a>
+      <a class="teho-tier" href="https://ko-fi.com/YOUR_KOFI_HANDLE" target="_blank" rel="noopener">
+        <span class="emoji">🥤</span><span class="label">Teh-o ais</span><span class="price">$4</span>
+      </a>
+      <a class="teho-tier" href="https://ko-fi.com/YOUR_KOFI_HANDLE" target="_blank" rel="noopener">
+        <span class="emoji">🫖</span><span class="label">Round for the kopitiam</span><span class="price">$10</span>
+      </a>
+    </div>
+    <p class="teho-note">Opens Ko-fi in a new tab — this one's a real link, not fake like the rest of the site.</p>
   </div>
 </div>
 
@@ -789,6 +821,9 @@ function showCouriers(){
   document.getElementById('courierOverlay').classList.add('open');
 }
 function closeCouriers(){ document.getElementById('courierOverlay').classList.remove('open'); }
+
+function openTehO(){ document.getElementById('tehOOverlay').classList.add('open'); }
+function closeTehO(){ document.getElementById('tehOOverlay').classList.remove('open'); }
 
 // ---------- hero stat ----------
 let ordersDelivered = 0;
