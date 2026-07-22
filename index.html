@@ -73,8 +73,10 @@
 
   .menu-grid{max-width:1100px;margin:0 auto;padding:0 24px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px;}
   .dish-card{background:var(--enamel);border:1.5px solid var(--line);border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;gap:8px;}
-  .dish-photo{width:100%;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:var(--cream);}
+  .dish-photo{width:100%;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:var(--cream);position:relative;}
   .dish-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .premium-badge{position:absolute;top:8px;left:8px;background:linear-gradient(135deg,#E3A73D,#B8791F);color:#fff;font-family:'Baloo 2', sans-serif;font-weight:700;font-size:10.5px;padding:4px 10px;border-radius:999px;box-shadow:0 2px 6px rgba(0,0,0,0.25);letter-spacing:0.02em;}
+  .dish-card.premium{border-color:#E3A73D;border-width:2px;background:linear-gradient(180deg,#FFFBF2,var(--enamel));}
   .dish-emoji{font-size:42px;}
   .thumb{width:38px;height:38px;border-radius:8px;overflow:hidden;flex:0 0 auto;background:var(--cream);}
   .thumb img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -241,7 +243,7 @@
     <div class="hero-stats">
       <div><b id="statOrders">0</b>orders "delivered"</div>
       <div><b>$0.00</b>spent, forever</div>
-      <div><b>26</b>stalls open now</div>
+      <div><b>36</b>stalls open now</div>
     </div>
   </div>
   <div class="hero-visual">
@@ -262,7 +264,7 @@
 <div class="section" id="menu-section">
   <span class="section-label">step 01 · the (free) menu</span>
   <h2>The hawker centre 🏮</h2>
-  <p class="sub">Twenty-six dishes, five cuisines, one imaginary void deck. Prices update live and mean nothing.</p>
+  <p class="sub">Thirty-six dishes, six cuisines — now with rare Japanese luxury and a legendary Fujian banquet soup. Prices update live and mean nothing.</p>
   <div class="tabs" id="tabs"></div>
 </div>
 <div class="menu-grid" id="menuGrid"></div>
@@ -368,13 +370,13 @@
 const WM = 'https://commons.wikimedia.org/wiki/Special:FilePath/';
 const US = (id)=>`https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800&q=80`;
 const DISHES = [
-  {id:1, cat:'chinese', emoji:'🍗', img:US('1710256198508-41630f431e35'), name:'Hainanese chicken rice', stall:"Tian Tian's Stall", desc:'Poached chicken, fragrant rice, chilli-ginger sauce.', price:4.50},
-  {id:2, cat:'chinese', emoji:'🍜', img:WM+'Char_kway_teow.jpg', name:'Char kway teow', stall:"Wok Hei Corner", desc:'Flat rice noodles, cockles, lap cheong, dark soy.', price:5.00},
-  {id:3, cat:'chinese', emoji:'🍲', img:US('1631709497146-a239ef373cf1'), name:'Bak chor mee', stall:"Ah Kow Noodle House", desc:'Minced pork noodles, vinegar, chilli, pork lard.', price:4.80},
+  {id:1, cat:'chinese', emoji:'🍗', img:'images/hainanese_chicken_rice.jpeg', name:'Hainanese chicken rice', stall:"Tian Tian's Stall", desc:'Poached chicken, fragrant rice, chilli-ginger sauce.', price:4.50},
+  {id:2, cat:'chinese', emoji:'🍜', img:'images/char_kway_teow.jpg', name:'Char kway teow', stall:"Wok Hei Corner", desc:'Flat rice noodles, cockles, lap cheong, dark soy.', price:5.00},
+  {id:3, cat:'chinese', emoji:'🍲', img:'images/bak_chor_mee.jpg', name:'Bak chor mee', stall:"Ah Kow Noodle House", desc:'Minced pork noodles, vinegar, chilli, pork lard.', price:4.80},
   {id:4, cat:'chinese', emoji:'🦐', img:WM+'Singapore_style_Hokkien_mee.jpg', name:'Hokkien mee', stall:"Geylang Prawn Mee", desc:'Prawn stock noodles, squid, pork belly.', price:5.50},
-  {id:5, cat:'chinese', emoji:'🦀', img:WM+'Chilli_crab-01.jpg', name:'Chilli crab', stall:"East Coast Seafood", desc:'Whole crab, tomato-chilli gravy, fried mantou.', price:38.00},
-  {id:6, cat:'peranakan', emoji:'🍲', img:US('1768703321790-e09a80a46f2c'), name:'Laksa', stall:"Katong Laksa House", desc:'Coconut curry noodles, prawns, fish cake, laksa leaf.', price:6.00},
-  {id:7, cat:'peranakan', emoji:'🥘', img:WM+'Buahkeluak.JPG', name:'Ayam buah keluak', stall:"Nyonya Kitchen", desc:'Chicken stewed with black nut, tamarind, spices.', price:9.50},
+  {id:5, cat:'chinese', emoji:'🦀', img:'images/chilli_crab.jpg', name:'Chilli crab', stall:"East Coast Seafood", desc:'Whole crab, tomato-chilli gravy, fried mantou.', price:38.00},
+  {id:6, cat:'peranakan', emoji:'🍲', img:'images/laksa.jpg', name:'Laksa', stall:"Katong Laksa House", desc:'Coconut curry noodles, prawns, fish cake, laksa leaf.', price:6.00},
+  {id:7, cat:'peranakan', emoji:'🥘', img:'images/ayam_buah_keluak.jpg', name:'Ayam buah keluak', stall:"Nyonya Kitchen", desc:'Chicken stewed with black nut, tamarind, spices.', price:9.50},
   {id:8, cat:'peranakan', emoji:'🥗', img:WM+'Fruit_Rojak.jpg', name:'Rojak', stall:"Fruit & Prawn Paste Corner", desc:'Fruit, cucumber, tau pok, thick prawn paste dressing.', price:4.00},
   {id:9, cat:'malay', emoji:'🍛', img:'images/nasi_lemak.jpeg', name:'Nasi lemak', stall:"Auntie Timah's", desc:'Coconut rice, ikan bilis, egg, sambal, fried chicken.', price:4.50},
   {id:10, cat:'malay', emoji:'🍢', img:WM+'Satay_with_Nasi_Impit.jpg', name:'Satay (10pc)', stall:"Lorong Satay Club", desc:'Chicken and beef skewers, peanut sauce, ketupat.', price:8.00},
@@ -387,17 +389,28 @@ const DISHES = [
   {id:17, cat:'malay', emoji:'🥟', img:'images/curry_puff.jpeg', name:'Curry puff', stall:"Old Chang's Snack Corner", desc:'Flaky pastry, curried chicken and potato filling.', price:1.50},
   {id:18, cat:'chinese', emoji:'🍖', img:'images/bak_kut_teh.jpeg', name:'Bak kut teh', stall:"Klang Herbal Pork Ribs", desc:'Peppery pork rib soup, garlic, herbs, youtiao on the side.', price:7.00},
   {id:19, cat:'chinese', emoji:'🌯', img:'images/popiah.jpeg', name:'Popiah', stall:"Teochew Roll Corner", desc:'Fresh spring roll, turnip, egg, peanut, sweet sauce.', price:3.50},
-  {id:20, cat:'indian', emoji:'🐟', img:WM+'Fish_head_curry_peranakan_z.JPG', name:'Fish head curry', stall:"Banana Leaf Corner", desc:'Red snapper head simmered in tangy, spiced curry gravy.', price:14.00},
+  {id:20, cat:'indian', emoji:'🐟', img:'images/fish_head_curry.jpg', name:'Fish head curry', stall:"Banana Leaf Corner", desc:'Red snapper head simmered in tangy, spiced curry gravy.', price:14.00},
   {id:21, cat:'chinese', emoji:'🐡', img:'images/fishball_noodle.jpg', name:'Fish ball noodle', stall:"Teochew Fishball Stall", desc:'Springy fish balls, fish cake, egg noodles in clear broth.', price:4.50},
   {id:22, cat:'chinese', emoji:'🥟', img:US('1746183055178-e4d5889140f0'), name:'Wanton noodle', stall:"Golden Wanton Mee House", desc:'Springy egg noodles, char siew, dumplings, dark soy dressing.', price:5.00},
   {id:23, cat:'chinese', emoji:'🍥', img:'images/lor_mee.jpeg', name:'Lor mee', stall:"Braised Noodle Corner", desc:'Thick egg noodles in starchy braised gravy, fried fish, egg, garlic.', price:4.50},
   {id:24, cat:'malay', emoji:'🍳', img:'images/mee_goreng.jpg', name:'Mee goreng', stall:"Mamak Corner", desc:'Spicy fried noodles, prawns, egg, tomato, potato.', price:4.50},
   {id:25, cat:'malay', emoji:'🧊', img:'images/tauhu_goreng.jpeg', name:'Tauhu goreng', stall:"Beancurd Corner", desc:'Fried beancurd, cucumber, peanut-chilli sauce.', price:3.50},
   {id:26, cat:'indian', emoji:'🥙', img:'images/indian_rojak.jpg', name:'Indian rojak', stall:"Mamak Fritter Stall", desc:'Assorted fritters, prawn fritters, egg, tofu, sweet-spicy dip.', price:5.00},
+  {id:27, cat:'premium', emoji:'🍖', img:US('1773417325310-cc9c9bef75e7'), name:'Lamb Shank Rendang', stall:"The Chef's Table", desc:'Slow-braised lamb shank in rich rendang gravy, fall-off-the-bone tender.', price:42.00},
+  {id:28, cat:'premium', emoji:'🦞', img:US('1694537583728-c4da14026f8e'), name:'Whole Boston Lobster Noodles', stall:"The Chef's Table", desc:'Whole butter-poached lobster over e-fu noodles, roe butter sauce.', price:128.00},
+  {id:29, cat:'premium', emoji:'🥩', img:US('1574095443374-6748e7dd6c84'), name:'A5 Wagyu Beef Rice Bowl', stall:"The Chef's Table", desc:'Seared A5 Japanese wagyu over garlic fried rice, onsen egg.', price:68.00},
+  {id:30, cat:'premium', emoji:'🍄', img:US('1755677617146-9d69ea16b199'), name:'Black Truffle Fried Rice', stall:"The Chef's Table", desc:'Wok-fried rice, shaved black truffle, crab meat, gold leaf.', price:58.00},
+  {id:31, cat:'premium', emoji:'🦆', img:US('1758972574371-57cf8c42bae8'), name:'Pan-Seared Foie Gras', stall:"The Chef's Table", desc:'Torched foie gras, brioche toast, fig reduction, sea salt.', price:48.00},
+  {id:32, cat:'premium', emoji:'🍣', img:US('1635452065566-9c89471bb86c'), name:'Omakase Sushi Platter', stall:"Edomae Sushi Bar", desc:"Chef's choice nigiri selection, seasonal catch, hand-pressed rice.", price:168.00},
+  {id:33, cat:'premium', emoji:'🌊', img:US('1541350013829-75d00d6c8578'), name:'Uni (Sea Urchin) Sashimi', stall:"Edomae Sushi Bar", desc:'Fresh Hokkaido sea urchin roe, shiso leaf, dash of soy.', price:38.00},
+  {id:34, cat:'premium', emoji:'🥩', img:US('1602473812169-ede177b00aea'), name:'A5 Kobe Beef Steak', stall:"Edomae Sushi Bar", desc:'Certified Kobe sirloin, hot stone grill, wasabi and sea salt.', price:138.00},
+  {id:35, cat:'premium', emoji:'🐍', img:US('1763627719044-5d1d6a6b809c'), name:'Unagi Kabayaki', stall:"Edomae Sushi Bar", desc:'Charcoal-grilled freshwater eel, sweet soy glaze, sansho pepper.', price:32.00},
+  {id:36, cat:'premium', emoji:'🍲', img:WM+'Fotiaoqiang_at_Juchunyuan,_Fuzhou_(20250127114656).jpg', name:'Buddha Jumps Over the Wall', stall:"The Chef's Table", desc:'Fujian banquet soup — abalone, sea cucumber, scallop, ham, slow-double-boiled for hours.', price:98.00},
 ];
 const CATS = [
   {key:'all', label:'All stalls'},{key:'chinese', label:'Chinese'},{key:'malay', label:'Malay'},
   {key:'indian', label:'Indian'},{key:'peranakan', label:'Peranakan'},{key:'kopitiam', label:'Kopitiam'},
+  {key:'premium', label:'💎 Premium'},
 ];
 // spice/portion/addon customization — every dish gets a 3-group option set
 const OPT_GROUPS = [
@@ -421,8 +434,8 @@ function renderMenu(){
   const grid = document.getElementById('menuGrid');
   const list = activeCat==='all' ? DISHES : DISHES.filter(d=>d.cat===activeCat);
   grid.innerHTML = list.map(d => `
-    <div class="dish-card">
-      <div class="dish-photo"><img src="${d.img}" alt="${d.name}" loading="lazy" onerror="this.parentElement.outerHTML='<div class=&quot;dish-emoji&quot;>${d.emoji}</div>'"></div>
+    <div class="dish-card ${d.cat==='premium'?'premium':''}">
+      <div class="dish-photo">${d.cat==='premium'?'<span class="premium-badge">✨ RARE</span>':''}<img src="${d.img}" alt="${d.name}" loading="lazy" onerror="this.parentElement.outerHTML='<div class=&quot;dish-emoji&quot;>${d.emoji}</div>'"></div>
       <div class="dish-top" style="margin-top:2px;"><div></div><div class="dish-tag">${d.cat}</div></div>
       <div><p class="dish-name">${d.name}</p></div>
       <p class="dish-desc">${d.desc}</p>
