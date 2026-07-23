@@ -104,13 +104,32 @@
   .dish-rating b{color:var(--ink);font-family:'Space Mono', monospace;font-weight:700;}
   .dish-stall{font-size:12.5px;color:#8a8074;margin:0;}
   .dish-desc{font-size:13px;color:#5b5448;line-height:1.4;margin:2px 0 6px;flex-grow:1;}
-  .dish-bottom{display:flex;align-items:center;justify-content:space-between;}
+  .dish-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
   .dish-price{font-family:'Space Mono', monospace;font-weight:700;font-size:16px;color:var(--teal-dark);}
   .dish-old-price{font-size:12px;text-decoration:line-through;color:#b0a798;margin-right:6px;}
-  .add-btn{background:var(--teal);color:var(--enamel);border:none;border-radius:999px;padding:8px 16px;font-size:13.5px;cursor:pointer;font-weight:700;font-family:'Work Sans', sans-serif;}
+  .add-btn{background:var(--teal);color:var(--enamel);border:none;border-radius:999px;padding:8px 16px;font-size:13.5px;cursor:pointer;font-weight:700;font-family:'Work Sans', sans-serif;white-space:nowrap;flex-shrink:0;margin-left:auto;}
   .add-btn:hover{background:var(--red);}
 
   .how-wrap{background:var(--teal-dark);color:var(--enamel);padding:56px 0;margin-top:20px;}
+  /* ---- About section ---- */
+  .about-wrap{max-width:900px;margin:0 auto;padding:56px 24px;text-align:center;}
+  .about-wrap h2{font-size:32px;color:var(--teal-dark);margin:8px 0 16px;}
+  .about-wrap p.lead{font-size:16px;line-height:1.7;color:#4A443C;max-width:640px;margin:0 auto 30px;}
+  .about-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px;text-align:left;}
+  .about-card{background:var(--enamel);border:1.5px solid var(--line);border-radius:14px;padding:18px;}
+  .about-card .icon{font-size:24px;margin-bottom:8px;}
+  .about-card h3{font-family:'Baloo 2', sans-serif;font-size:15px;margin:0 0 6px;color:var(--teal-dark);}
+  .about-card p{font-size:13px;color:#5b5448;line-height:1.5;margin:0;}
+  /* ---- FAQ section ---- */
+  .faq-wrap{background:var(--enamel);padding:10px 0 60px;}
+  .faq-list{max-width:760px;margin:0 auto;padding:0 24px;}
+  .faq-item{border-bottom:1.5px solid var(--line);}
+  .faq-item summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 4px;font-family:'Baloo 2', sans-serif;font-weight:600;font-size:15.5px;color:var(--teal-dark);}
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:'+';font-size:20px;color:var(--red);flex-shrink:0;transition:transform 0.2s;}
+  .faq-item[open] summary::after{transform:rotate(45deg);}
+  .faq-item p{margin:0 4px 18px;font-size:14px;line-height:1.65;color:#4A443C;}
+  @media (max-width:760px){ .about-cards{grid-template-columns:1fr 1fr;} }
   .how-inner{max-width:1100px;margin:0 auto;padding:0 24px;}
   .how-inner .section-label{color:var(--turmeric);} .how-inner h2{color:var(--enamel);} .how-inner .sub{color:#cfe4e0;}
   .how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:26px;}
@@ -313,6 +332,55 @@
       <div class="how-step"><div class="num">02</div><h3>Tap to "pay"</h3><p>A fake NETS card, pre-filled, no real number. No account, no charge, ever.</p></div>
       <div class="how-step"><div class="num">03</div><h3>Track the rider</h3><p>Watch a live map, meet your courier (rare ones exist), and get a "Delivered!" moment — dopamine included.</p></div>
     </div>
+  </div>
+</div>
+
+<div class="about-wrap" id="about-section">
+  <span class="section-label">🧠 about a dopamine site</span>
+  <h2>Order Until Shiok — and that's the point.</h2>
+  <p class="lead">Order Until Shiok is a free "dopamine site" — a fake hawker-delivery simulator. You browse real Singapore dishes, fill a chit, "pay" with a card that charges nothing, and watch a rider cross a void deck on a live map. No money ever moves, no food ever arrives — just the little hit of satisfaction that comes from ordering.</p>
+  <div class="about-cards">
+    <div class="about-card"><div class="icon">🌙</div><h3>Late-night cravings</h3><p>Hungry at midnight but don't actually want to blow $30 on delivery? Order it here, get the buzz, sleep happy.</p></div>
+    <div class="about-card"><div class="icon">💸</div><h3>A no-spend ritual</h3><p>Satisfy the "add to cart and check out" urge without the bill or the regret — great for a no-spend month.</p></div>
+    <div class="about-card"><div class="icon">🧠</div><h3>A quick mood lift</h3><p>A tiny, low-stakes reward when you need one — calmer than doomscrolling, cheaper than actual shopping.</p></div>
+    <div class="about-card"><div class="icon">🏮</div><h3>Curious foodies</h3><p>Browse dozens of real hawker and ATAS dishes, customise every option, and "visit" every stall for free.</p></div>
+  </div>
+</div>
+
+<div class="faq-wrap" id="faq-section">
+  <div class="section" style="padding-bottom:6px;">
+    <span class="section-label">good to know</span>
+    <h2>Frequently asked questions</h2>
+  </div>
+  <div class="faq-list">
+    <details class="faq-item" open>
+      <summary>What is Order Until Shiok?</summary>
+      <p>It's a free "dopamine site" — a fake hawker-delivery simulator. Browse real Singapore dishes, fill a chit, check out with a pre-filled fake card, and watch a rider race to your void deck on a live map. No money is ever charged and no food is ever delivered. The makan never comes; the dopamine does.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Why does the food never come?</summary>
+      <p>That's the entire point. Order Until Shiok recreates the thrill of ordering — the browsing, the chit, the "pay" button, the rider on the way — without the spending or the regret. The reward is the anticipation itself, so the makan never arrives and you keep every coin.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is it free? Will I be charged anything?</summary>
+      <p>Completely free, always. No account, no real payment, no card details are collected. Checkout uses an obviously fake NETS card and processes nothing. Order as much as you like and spend exactly $0.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What is a "dopamine site"?</summary>
+      <p>A dopamine site simulates the psychological reward of shopping or food delivery — the browsing, the cart, the checkout — without spending any real money. Order Until Shiok is the Singapore hawker-food version of that trend.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Do you take real payments or store my card?</summary>
+      <p>No. No real payments are processed and no card data is stored anywhere. The card fields are pre-filled with a fake number for fun. Please don't ever enter a real card — there's nothing here to pay for.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is this safe? Is it a scam?</summary>
+      <p>It's safe and it isn't a scam — it's a novelty entertainment site. Nothing is sold, nothing is charged, and we never ask for personal or payment information. It's purely for the fun of the order.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How can I support the site if it's free?</summary>
+      <p>If it made you smile, you can leave an optional tip via the "Buy me a teh-o" button in the footer. Tips are genuinely appreciated but never required — the site stays free for everyone.</p>
+    </details>
   </div>
 </div>
 
