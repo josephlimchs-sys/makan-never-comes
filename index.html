@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <style>
   :root{
     --teal:#0E5C57; --teal-dark:#083F3B; --red:#C0392B; --turmeric:#E3A73D;
@@ -39,7 +40,8 @@
   .streak-dot.on{background:var(--red);border-color:var(--red);}
   .streak-word{font-size:12.5px;color:#8a8074;margin-top:2px;}
 
-  .hero{max-width:1180px;margin:0 auto;padding:50px 24px 60px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:40px;align-items:center;position:relative;}
+  .hero{max-width:1180px;margin:0 auto;padding:50px 24px 40px;position:relative;}
+  .hero-text{max-width:640px;}
   .eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--enamel);border:1.5px solid var(--line);color:var(--teal-dark);font-weight:600;font-size:13px;padding:7px 16px 7px 8px;border-radius:999px;margin-bottom:22px;}
   .eyebrow .wave{background:var(--turmeric);border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:14px;}
   .hero h1{font-size:64px;line-height:0.98;margin:0 0 20px;color:var(--teal-dark);font-weight:700;letter-spacing:-0.02em;}
@@ -53,16 +55,11 @@
   .hero-stats{display:flex;gap:26px;margin-top:32px;font-size:13.5px;color:#5b5448;flex-wrap:wrap;}
   .hero-stats b{display:block;font-size:22px;color:var(--teal-dark);font-family:'Space Mono', monospace;}
 
-  .hero-visual{background:var(--teal);border-radius:28px;padding:28px;position:relative;overflow:visible;color:var(--enamel);box-shadow:0 20px 50px rgba(14,92,87,0.28);}
-  .stall-sign{font-family:'Baloo 2', sans-serif;font-size:14px;background:var(--turmeric);color:var(--teal-dark);display:inline-block;padding:4px 10px;border-radius:6px;margin-bottom:14px;font-weight:700;}
-  .hero-dish{font-size:64px;text-align:center;margin:6px 0;}
-  .hero-dish-name{font-family:'Baloo 2', sans-serif;font-size:22px;text-align:center;margin-bottom:4px;}
-  .hero-dish-sub{text-align:center;font-size:13px;opacity:0.8;margin-bottom:16px;}
-  .queue-strip{background:rgba(255,255,255,0.1);border-radius:10px;padding:10px 14px;display:flex;justify-content:space-between;font-size:12.5px;font-family:'Space Mono', monospace;}
-  .hero-float{position:absolute;background:var(--enamel);color:var(--teal-dark);border-radius:16px;padding:10px 14px;font-family:'Baloo 2', sans-serif;font-weight:700;font-size:13px;box-shadow:0 10px 26px rgba(0,0,0,0.18);display:flex;align-items:center;gap:7px;z-index:5;white-space:nowrap;}
-  .hero-float.f1{top:-16px;right:12px;transform:rotate(-4deg);}
-  .hero-float.f2{bottom:-16px;left:-18px;transform:rotate(3deg);background:var(--turmeric);color:var(--teal-dark);}
-  @media (max-width:760px){ .hero-float{display:none;} }
+  .hero-banner-full{width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;margin-top:36px;overflow:hidden;}
+  .hero-banner-full img{width:100%;height:min(56vw,560px);object-fit:cover;display:block;}
+  .hero-banner-full::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(8,63,59,0.05), rgba(8,63,59,0.35));}
+  .hero-banner-caption{position:absolute;left:24px;bottom:22px;z-index:2;background:var(--enamel);color:var(--teal-dark);font-family:'Baloo 2', sans-serif;font-weight:700;font-size:14px;padding:9px 16px;border-radius:999px;box-shadow:0 8px 20px rgba(0,0,0,0.2);}
+  @media (max-width:760px){ .hero-banner-full img{height:280px;} }
 
   .perks{max-width:1100px;margin:0 auto;padding:0 24px 50px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
   .perk{background:var(--enamel);border:1.5px solid var(--line);border-radius:var(--radius);padding:18px 20px;}
@@ -255,6 +252,13 @@
   .cust-odelta{color:#8a8074;font-weight:700;font-size:12px;font-family:'Space Mono', monospace;}
   .cust-remark{width:100%;min-height:60px;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font-family:'Work Sans', sans-serif;font-size:14px;color:var(--ink);resize:vertical;background:var(--enamel);}
   .cust-remark:focus{outline:none;border-color:var(--teal);}
+  .cust-myrating{border-top:1px dashed var(--line);padding:12px 0 4px;text-align:center;}
+  .cust-myrating .label{font-family:'Baloo 2', sans-serif;font-weight:600;font-size:13.5px;margin-bottom:6px;color:var(--teal-dark);}
+  .cust-stars-input{display:flex;justify-content:center;gap:4px;}
+  .cust-stars-input button{background:none;border:none;font-size:26px;cursor:pointer;color:#d8cfc0;line-height:1;padding:2px;transition:transform 0.1s;}
+  .cust-stars-input button:hover{transform:scale(1.15);}
+  .cust-stars-input button.filled{color:var(--turmeric);}
+  .cust-myrating .thanks{font-size:12px;color:#8a8074;margin-top:4px;}
   .cust-foot{display:flex;align-items:center;gap:12px;margin-top:14px;}
   .cust-qty{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--enamel);}
   .cust-qty button{border:none;background:none;color:var(--red);font-size:1.2rem;font-weight:700;cursor:pointer;}
@@ -295,8 +299,46 @@
   .courier-cell .cn{display:block;font-family:'Baloo 2', sans-serif;font-weight:600;font-size:10px;color:#8a8074;margin-top:4px;line-height:1.15;}
   .courier-cell.got{border-color:var(--red);} .courier-cell.got .ce{filter:none;opacity:1;} .courier-cell.got .cn{color:var(--ink);}
 
+  /* ---- Ask Jasmine chatbot ---- */
+  .jasmine-btn{position:fixed;right:20px;bottom:88px;z-index:61;display:flex;align-items:center;gap:9px;background:var(--red);color:var(--enamel);border:none;border-radius:999px;padding:11px 18px 11px 11px;font-family:'Baloo 2', sans-serif;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 8px 20px rgba(192,57,43,0.32);}
+  .jasmine-btn:hover{background:#9C2E22;}
+  .jasmine-btn .av{width:28px;height:28px;border-radius:50%;background:var(--turmeric);color:var(--teal-dark);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+  .jasmine-intro{position:fixed;right:22px;bottom:150px;z-index:61;background:var(--enamel);border:1.5px solid var(--line);border-radius:16px 16px 4px 16px;padding:11px 15px;font-size:13px;max-width:200px;box-shadow:0 8px 20px rgba(0,0,0,0.15);cursor:pointer;display:none;}
+  .jasmine-intro.show{display:block;}
+  .jasmine-panel{position:fixed;right:20px;bottom:20px;z-index:70;width:370px;max-width:92vw;height:min(540px,72vh);background:var(--enamel);border-radius:22px;box-shadow:0 24px 60px rgba(0,0,0,0.32);display:none;flex-direction:column;overflow:hidden;}
+  .jasmine-panel.open{display:flex;}
+  .jasmine-head{background:var(--teal);color:var(--enamel);padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+  .jasmine-head .av{width:36px;height:36px;border-radius:50%;background:var(--turmeric);color:var(--teal-dark);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+  .jasmine-head .info{line-height:1.25;}
+  .jasmine-head .info b{font-family:'Baloo 2', sans-serif;display:block;font-size:15px;}
+  .jasmine-head .info small{font-size:11.5px;opacity:0.85;}
+  .jasmine-head .x{margin-left:auto;background:none;border:none;color:var(--enamel);font-size:16px;cursor:pointer;flex-shrink:0;}
+  .jasmine-body{flex:1;overflow-y:auto;padding:14px 14px 6px;display:flex;flex-direction:column;gap:10px;}
+  .jmsg{max-width:88%;font-size:13.5px;line-height:1.55;padding:9px 13px;border-radius:14px;}
+  .jmsg.bot{background:var(--cream);align-self:flex-start;border-bottom-left-radius:4px;}
+  .jmsg.user{background:var(--teal);color:var(--enamel);align-self:flex-end;border-bottom-right-radius:4px;}
+  .jmsg-dishes{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+  .jmsg-dish{display:flex;align-items:center;gap:10px;background:var(--enamel);border:1.5px solid var(--line);border-radius:12px;padding:7px;cursor:pointer;text-align:left;}
+  .jmsg-dish:hover{border-color:var(--teal);}
+  .jmsg-dish img{width:42px;height:42px;border-radius:8px;object-fit:cover;flex-shrink:0;}
+  .jmsg-place-ico{width:42px;height:42px;border-radius:8px;background:var(--cream);color:var(--red);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+  .jmsg-dish .n{font-family:'Baloo 2', sans-serif;font-weight:700;font-size:12.5px;}
+  .jmsg-dish .p{font-family:'Space Mono', monospace;font-size:11.5px;color:var(--teal-dark);}
+  .jasmine-typing span{display:inline-block;width:6px;height:6px;background:#8a8074;border-radius:50%;margin-right:3px;animation:jtyping 1s infinite;}
+  .jasmine-typing span:nth-child(2){animation-delay:0.15s;} .jasmine-typing span:nth-child(3){animation-delay:0.3s;}
+  @keyframes jtyping{0%,60%,100%{opacity:0.3;} 30%{opacity:1;}}
+  .jasmine-suggest{display:flex;gap:6px;flex-wrap:wrap;padding:0 14px 10px;flex-shrink:0;}
+  .jasmine-chip{background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:12px;cursor:pointer;font-family:'Work Sans', sans-serif;}
+  .jasmine-chip:hover{border-color:var(--teal);}
+  .jasmine-input-row{display:flex;gap:8px;padding:10px 14px 14px;border-top:1.5px solid var(--line);flex-shrink:0;}
+  .jasmine-input-row input{flex:1;border:1.5px solid var(--line);border-radius:999px;padding:10px 14px;font-family:'Work Sans', sans-serif;font-size:13.5px;background:var(--enamel);color:var(--ink);}
+  .jasmine-input-row input:focus{outline:none;border-color:var(--teal);}
+  .jasmine-input-row button{background:var(--red);color:var(--enamel);border:none;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:15px;}
+  .jasmine-input-row button:hover{background:#9C2E22;}
+  @media (max-width:480px){ .jasmine-panel{right:10px;left:10px;width:auto;bottom:10px;height:78vh;} .jasmine-btn{right:14px;padding:10px 14px 10px 10px;font-size:13px;} .jasmine-intro{right:16px;max-width:170px;} }
+
   @media (max-width:760px){
-    .hero{grid-template-columns:1fr;} .perks{grid-template-columns:1fr;} .how-steps{grid-template-columns:1fr;}
+    .perks{grid-template-columns:1fr;} .how-steps{grid-template-columns:1fr;}
     .hero h1{font-size:38px;} .topbar-right span.hide-mobile{display:none;}
   }
 </style>
@@ -307,8 +349,8 @@
   <div class="topbar-inner">
     <div class="brand"><img src="images/logo_white.png" alt="Order Until Shiok" class="brand-logo"></div>
     <div class="topbar-right">
-      <span class="hide-mobile" id="locLabel">📍 Deliver to: your void deck · 12 min</span>
-      <button class="cart-btn" onclick="openCart()">🧾 Chit <span class="cart-count" id="cartCount">0</span></button>
+      <span class="hide-mobile" id="locLabel"><i class="bi bi-geo-alt-fill"></i> Deliver to: your void deck · 12 min</span>
+      <button class="cart-btn" onclick="openCart()"><i class="bi bi-receipt"></i> Chit <span class="cart-count" id="cartCount">0</span></button>
     </div>
   </div>
 </div>
@@ -316,35 +358,30 @@
 <div class="streak-strip"><div class="streak-card" id="streakCard"></div></div>
 
 <div class="hero">
-  <div>
-    <span class="eyebrow"><span class="wave">👋</span> Hi, hungry friend — zero real charges here</span>
+  <div class="hero-text">
+    <span class="eyebrow"><span class="wave"><i class="bi bi-people-fill"></i></span> Hi, hungry friend — zero real charges here</span>
     <h1>We don't cook.<br>We fake the <span>bill</span>.</h1>
     <p>Browse hawker classics from every stall in the imaginary centre, customise your spice level, "pay" with a fake NETS card, and track a live rider crossing your void deck. The food never comes — but the craving gets satisfied anyway.</p>
     <div class="hero-ctas">
-      <button class="btn-primary" onclick="scrollToMenu()">🍽️ Start craving</button>
-      <button class="btn-ghost" onclick="scrollToHow()">→ How it works</button>
+      <button class="btn-primary" onclick="scrollToMenu()"><i class="bi bi-basket2-fill"></i> Start craving</button>
+      <button class="btn-ghost" onclick="scrollToHow()"><i class="bi bi-arrow-right"></i> How it works</button>
     </div>
     <div class="hero-stats">
       <div><b id="statOrders">0</b>orders "delivered"</div>
       <div><b>$0.00</b>spent, forever</div>
-      <div><b>68</b>stalls open now</div>
+      <div><b>69</b>stalls open now</div>
     </div>
   </div>
-  <div class="hero-visual">
-    <div class="hero-float f1">😋 Om nom nom...</div>
-    <div class="hero-float f2">🥰 So shiok!</div>
-    <span class="stall-sign">🔥 today's queue</span>
-    <div class="hero-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Nasi_lemak_on_banana_leaf.jpg" alt="Nasi lemak" onerror="this.parentElement.outerHTML='<div class=&quot;hero-dish&quot;>🍛</div>'"></div>
-    <div class="hero-dish-name">Nasi Lemak</div>
-    <div class="hero-dish-sub">rated 4.9 · 0 min wait, forever</div>
-    <div class="queue-strip"><span>QUEUE NO. 088</span><span>SERVING: 087</span></div>
+  <div class="hero-banner-full">
+    <img src="images/hero_banner.jpg" alt="Enjoying a hawker meal">
+    <span class="hero-banner-caption"><i class="bi bi-heart-fill"></i> The feeling is real. The bill isn't.</span>
   </div>
 </div>
 
 <div class="perks">
-  <div class="perk"><div class="icon">🏷️</div><h3>50% off, always</h3><p>Every dish, every stall, forever on sale. The discount is as real as the receipt.</p></div>
-  <div class="perk"><div class="icon">🛵</div><h3>Free delivery, no minimum</h3><p>No delivery fee, no surge pricing — because there's no delivery.</p></div>
-  <div class="perk"><div class="icon">🧾</div><h3>Zero-dollar chit</h3><p>Your total climbs like the real thing. Your bank account doesn't move an inch.</p></div>
+  <div class="perk"><div class="icon"><i class="bi bi-tag-fill"></i></div><h3>50% off, always</h3><p>Every dish, every stall, forever on sale. The discount is as real as the receipt.</p></div>
+  <div class="perk"><div class="icon"><i class="bi bi-truck"></i></div><h3>Free delivery, no minimum</h3><p>No delivery fee, no surge pricing — because there's no delivery.</p></div>
+  <div class="perk"><div class="icon"><i class="bi bi-receipt"></i></div><h3>Zero-dollar chit</h3><p>Your total climbs like the real thing. Your bank account doesn't move an inch.</p></div>
 </div>
 
 <div class="stat-band">
@@ -356,7 +393,7 @@
 </div>
 
 <div class="section" id="trending-section">
-  <span class="section-label">🔥 hot right now</span>
+  <span class="section-label"><i class="bi bi-fire"></i> hot right now</span>
   <h2>What people order</h2>
   <p class="sub">What everyone's ordering (and nobody's paying for) this minute.</p>
 </div>
@@ -367,27 +404,27 @@
 <div class="section" id="menu-section">
   <span class="section-label">step 01 · the (free) menu</span>
   <h2>The hawker centre</h2>
-  <p class="sub">Thirty-two dishes, six cuisines. Prices update live and mean nothing.</p>
+  <p class="sub">Thirty-three dishes, six cuisines. Prices update live and mean nothing.</p>
   <div class="tabs" id="tabs"></div>
 </div>
 <div class="menu-grid" id="menuGrid"></div>
 
 <div class="section" id="restaurant-section">
-  <span class="section-label">💎 For the ATAS</span>
+  <span class="section-label"><i class="bi bi-gem"></i> For the ATAS</span>
   <h2>The Restaurant</h2>
   <p class="sub">Twenty dishes, zero restraint — the ATAS tier gets its own dining room. Still free. Still fake.</p>
 </div>
 <div class="menu-grid" id="restaurantGrid"></div>
 
 <div class="section" id="drinks-section">
-  <span class="section-label">🥤 stay hydrated (or don't)</span>
+  <span class="section-label"><i class="bi bi-cup-straw"></i> stay hydrated (or don't)</span>
   <h2>The Drink Store</h2>
   <p class="sub">Eight drinks, zero calories charged to your wallet. Kopi however you like it.</p>
 </div>
 <div class="menu-grid" id="drinksGrid"></div>
 
 <div class="section" id="desserts-section">
-  <span class="section-label">🍰 sweet endings</span>
+  <span class="section-label"><i class="bi bi-cake2"></i> sweet endings</span>
   <h2>The Dessert Bar</h2>
   <p class="sub">Eight desserts, zero guilt — the calories are as fake as the receipt.</p>
 </div>
@@ -395,7 +432,7 @@
 
 <div class="how-wrap" id="how-section">
   <div class="how-inner">
-    <span class="section-label">step 02 · the craving loop</span>
+    <span class="section-label"><i class="bi bi-lightbulb-fill"></i> step 02 · the craving loop</span>
     <h2>How the makan hits 🧠</h2>
     <p class="sub">Three taps between you and a guilt-free dopamine hit.</p>
     <div class="how-steps">
@@ -417,14 +454,14 @@
 </div>
 
 <div class="about-wrap" id="about-section">
-  <span class="section-label">🧠 about a dopamine site</span>
+  <span class="section-label"><i class="bi bi-lightbulb-fill"></i> about a dopamine site</span>
   <h2>Order Until Shiok — and that's the point.</h2>
   <p class="lead">Order Until Shiok is a free "dopamine site" — a fake food-delivery simulator. You browse real Singapore dishes, fill a chit, "pay" with a card that charges nothing, and watch a rider cross a void deck on a live map. No money ever moves, no food ever arrives — just the little hit of satisfaction that comes from ordering.</p>
   <div class="about-cards">
-    <div class="about-card"><div class="icon">🌙</div><h3>Late-night cravings</h3><p>Hungry at midnight but don't actually want to blow $30 on delivery? Order it here, get the buzz, sleep happy.</p></div>
-    <div class="about-card"><div class="icon">💸</div><h3>A no-spend ritual</h3><p>Satisfy the "add to cart and check out" urge without the bill or the regret — great for a no-spend month.</p></div>
-    <div class="about-card"><div class="icon">🧠</div><h3>A quick mood lift</h3><p>A tiny, low-stakes reward when you need one — calmer than doomscrolling, cheaper than actual shopping.</p></div>
-    <div class="about-card"><div class="icon">🍽️</div><h3>Curious foodies</h3><p>Browse dozens of real hawker and ATAS dishes, customise every option, and "visit" every stall for free.</p></div>
+    <div class="about-card"><div class="icon"><i class="bi bi-moon-stars-fill"></i></div><h3>Late-night cravings</h3><p>Hungry at midnight but don't actually want to blow $30 on delivery? Order it here, get the buzz, sleep happy.</p></div>
+    <div class="about-card"><div class="icon"><i class="bi bi-cash-coin"></i></div><h3>A no-spend ritual</h3><p>Satisfy the "add to cart and check out" urge without the bill or the regret — great for a no-spend month.</p></div>
+    <div class="about-card"><div class="icon"><i class="bi bi-lightbulb-fill"></i></div><h3>A quick mood lift</h3><p>A tiny, low-stakes reward when you need one — calmer than doomscrolling, cheaper than actual shopping.</p></div>
+    <div class="about-card"><div class="icon"><i class="bi bi-basket2-fill"></i></div><h3>Curious foodies</h3><p>Browse dozens of real hawker and ATAS dishes, customise every option, and "visit" every stall for free.</p></div>
   </div>
 </div>
 
@@ -467,7 +504,7 @@
 
 <div class="promo-band">
   <div class="promo-copy">
-    <span class="section-label">🛵 zero-fee delivery service</span>
+    <span class="section-label"><i class="bi bi-truck"></i> zero-fee delivery service</span>
     <h2>Skip the bill. Every single time.</h2>
     <p>No delivery fee, no surge pricing, no card ever charged. Just the full spread of Singapore's best hawker, ATAS, drink and dessert stalls — free to browse, forever.</p>
     <div class="promo-ctas">
@@ -475,16 +512,33 @@
       <button class="btn-ghost" style="border-color:var(--enamel);color:var(--enamel);" onclick="scrollToHow()">🍽️ See how it works</button>
     </div>
   </div>
-  <div class="promo-emoji-cluster">🍜🥟🧋</div>
+  <div class="promo-emoji-cluster"><i class="bi bi-cup-hot-fill"></i> <i class="bi bi-basket2-fill"></i> <i class="bi bi-cup-straw"></i></div>
 </div>
 
 <footer>
   <div class="brand-mini"><img src="images/logo_color.png" alt="Order Until Shiok"></div>
   <p>All the dopamine of ordering supper, none of the spending. No real food, no real payment, no real GST.</p>
-  <button class="teh-o-btn" onclick="openTehO()"><span class="glass">🍵</span> Buy me a teh-o</button>
+  <button class="teh-o-btn" onclick="openTehO()"><span class="glass"><i class="bi bi-cup-hot-fill"></i></span> Buy me a teh-o</button>
 </footer>
 
-<button class="jump-top" id="jumpTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Jump to top" title="Jump to top">↑</button>
+<div class="jasmine-intro" id="jasmineIntro" onclick="openJasmine()">Hi, I'm Aunty 🌸 Ask me what to eat!</div>
+<button class="jasmine-btn" id="jasmineBtn" onclick="openJasmine()"><span class="av"><i class="bi bi-chat-heart-fill"></i></span> Ask Aunty</button>
+
+<div class="jasmine-panel" id="jasminePanel">
+  <div class="jasmine-head">
+    <span class="av"><i class="bi bi-chat-heart-fill"></i></span>
+    <div class="info"><b>Ask Aunty</b><small>Your makan matchmaker</small></div>
+    <button class="x" onclick="closeJasmine()" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+  </div>
+  <div class="jasmine-body" id="jasmineBody"></div>
+  <div class="jasmine-suggest" id="jasmineSuggest"></div>
+  <div class="jasmine-input-row">
+    <input id="jasmineInput" placeholder="e.g. something spicy under $5..." onkeydown="if(event.key==='Enter')jasmineSend()">
+    <button onclick="jasmineSend()" aria-label="Send"><i class="bi bi-send-fill"></i></button>
+  </div>
+</div>
+
+<button class="jump-top" id="jumpTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Jump to top" title="Jump to top"><i class="bi bi-arrow-up"></i></button>
 
 <!-- CART OVERLAY -->
 <div class="overlay" id="cartOverlay" onclick="closeCartOnBg(event)">
@@ -606,6 +660,7 @@ const DISHES = [
   {id:47, cat:'western', emoji:'🐟', img:US('1722105344016-0df8537c1799'), name:'Fish and Chips', stall:"Western Grill Corner", desc:'Beer-battered fish fillet, crispy fries, tartar sauce.', price:8.00, hideGroups:[0], addonOverride:[["None",0],["Extra fries",1.50],["Extra tartar sauce",0.50]]},
   {id:48, cat:'premium', emoji:'🍚', img:'images/bibimbap.jpg', name:'Bibimbap', stall:"Seoul Kitchen", desc:'Stone-pot rice, seasoned vegetables, gochujang, fried egg.', price:26.00, addonOverride:[["None",0],["Extra egg",0.80],["Extra beef bulgogi",3.00]]},
   {id:49, cat:'chinese', emoji:'🦪', img:'images/oyster_omelette.jpg', name:'Oyster Omelette', stall:"Wok Hei Corner", desc:'Crispy-edged egg omelette, plump oysters, savory starch gravy.', price:6.00, addonOverride:[["None",0],["Extra oysters",3.00],["Extra egg",0.80]]},
+  {id:74, cat:'chinese', emoji:'🦐', img:'images/tiger_prawn_noodle.jpg', name:'Tiger Prawn Noodle', stall:"Geylang Prawn Mee", desc:'Rich prawn broth, springy noodles, whole tiger prawns, fried shallots.', price:7.50, addonOverride:[["None",0],["Extra prawns",4.00],["Extra noodles",1.20]]},
   {id:50, cat:'premium', emoji:'🥩', img:'images/beef_wellington.jpg', name:'Beef Wellington', stall:"The Chef's Table", desc:'Prime beef tenderloin, mushroom duxelles, golden puff pastry.', price:88.00, hideGroups:[0,2]},
   {id:51, cat:'premium', emoji:'🍖', img:'images/herb_crusted_rack_of_lamb.jpg', name:'Herb-Crusted Rack of Lamb', stall:"The Chef's Table", desc:'New Zealand lamb rack, herb crust, roasted root vegetables.', price:68.00, hideGroups:[0,2]},
   {id:52, cat:'premium', emoji:'🐟', img:'images/grilled_norwegian_salmon.jpg', name:'Grilled Norwegian Salmon', stall:"The Chef's Table", desc:'Pan-seared salmon fillet, seasonal greens, lemon butter sauce.', price:36.00, hideGroups:[0,2]},
@@ -717,11 +772,17 @@ function lineTotal(d){
 function renderCustomize(d){
   const groups = getGroups(d);
   const t = lineTotal(d);
+  const myRating = loadMyRatings()[d.id] || 0;
   document.getElementById('custModal').innerHTML = `
     <button class="modal-close" onclick="closeCustomize()">✕</button>
     <div class="cust-photo"><img src="${d.img}" alt="${d.name}" onerror="this.parentElement.style.display='none'"></div>
     <p class="cust-name" style="text-align:center;">${d.name}${(d.cat==='malay'||d.cat==='indian')?' <span class="halal-badge" style="position:static;display:inline-flex;vertical-align:middle;">☪ HALAL</span>':''}</p>
     <p class="dish-rating" style="justify-content:center;margin-bottom:8px;"><span class="stars">${'★'.repeat(Math.round(dishRating(d).stars))}${'☆'.repeat(5-Math.round(dishRating(d).stars))}</span><b>${dishRating(d).stars}</b>(${dishRating(d).reviews})</p>
+    <div class="cust-myrating">
+      <div class="label">Rate this dish</div>
+      <div class="cust-stars-input">${[1,2,3,4,5].map(n=>`<button class="${n<=myRating?'filled':''}" onclick="rateDish(${d.id},${n})" aria-label="Rate ${n} stars">★</button>`).join('')}</div>
+      ${myRating?`<div class="thanks">Thanks for rating ${myRating}★!</div>`:''}
+    </div>
     <p class="sub" style="text-align:center;">${d.desc}</p>
     ${groups.map((g,gi)=>`
       <div class="cust-group">
@@ -746,6 +807,12 @@ function renderCustomize(d){
 }
 function pickOpt(gi,oi){ custState.sel[gi]=oi; renderCustomize(DISHES.find(x=>x.id===custState.dishId)); }
 function custQty(delta){ custState.qty=Math.max(1,custState.qty+delta); renderCustomize(DISHES.find(x=>x.id===custState.dishId)); }
+function loadMyRatings(){ try{ return JSON.parse(localStorage.getItem('mnc_ratings'))||{}; }catch(e){ return {}; } }
+function rateDish(id, stars){
+  const r = loadMyRatings(); r[id] = stars;
+  try{ localStorage.setItem('mnc_ratings', JSON.stringify(r)); }catch(e){}
+  renderCustomize(DISHES.find(x=>x.id===custState.dishId));
+}
 function closeCustomize(){ document.getElementById('custOverlay').classList.remove('open'); }
 function confirmAddToCart(){
   const d = DISHES.find(x=>x.id===custState.dishId);
@@ -839,7 +906,7 @@ function historyHTML(){
   return `<details class="acc"${live?' open':''}><summary><span>📜 Past cravings</span><em>${live?live+' live · ':''}${o.length}</em></summary>
     <div style="margin-top:8px;">
       <div style="display:flex;justify-content:flex-end;margin-bottom:6px;"><button onclick="clearOrders()" style="border:none;background:none;color:var(--red);font-weight:700;font-size:14px;cursor:pointer;">clear</button></div>
-      ${o.map((x,i)=>`<button class="hist-row" onclick="reopenOrder(${i})"><span>${x.no} · ${x.stallCat}</span><span>${x.total}</span><small>${x.items} · ${x.date} · ${x.done?'✅ delivered — tap to view':'🛵 in progress — tap to track'}</small></button>`).join('')}
+      ${o.map((x,i)=>`<button class="hist-row" onclick="reopenOrder(${i})"><span>${x.no} · ${x.stallCat}</span><span>${x.total}</span><small>${x.items} · ${x.date} · ${x.done?'<i class="bi bi-check-circle-fill"></i> delivered — tap to view':'<i class="bi bi-truck"></i> in progress — tap to track'}</small></button>`).join('')}
     </div></details>`;
 }
 function wireHistory(){}
@@ -885,7 +952,7 @@ function initStreak(){
   const m = streakMood(streak);
   let dots=''; for(let i=0;i<7;i++) dots += `<span class="streak-dot${i<Math.min(streak,7)?' on':''}"></span>`;
   box.innerHTML = `<span class="streak-cat">${m.face}</span>
-    <div><div class="streak-top">🔥 ${streak}-day streak <span class="streak-dots">${dots}</span></div>
+    <div><div class="streak-top"><i class="bi bi-fire"></i> ${streak}-day streak <span class="streak-dots">${dots}</span></div>
     <div class="streak-word">${m.word} · Best <b>${best}</b></div></div>`;
 }
 
@@ -996,7 +1063,7 @@ function startTracking(order){
   const totalSecs = order.durSecs;
   const etaMin = Math.round(totalSecs/60);
   const evOffset = _hash('ev|'+order.no);
-  const STAGES = [[0,'Order confirmed','✅'],[0.12,'Kitchen wok-ing your order','🍳'],[0.45,'Rider picked up your food','🛵'],[0.90,'Almost at your door','🏠']];
+  const STAGES = [[0,'Order confirmed','<i class="bi bi-check-circle-fill"></i>'],[0.12,'Kitchen wok-ing your order','<i class="bi bi-egg-fried"></i>'],[0.45,'Rider picked up your food','<i class="bi bi-truck"></i>'],[0.90,'Almost at your door','<i class="bi bi-house-door-fill"></i>']];
   const PICKUP = STAGES[2][0];
 
   const modal = document.getElementById('trackerModal');
@@ -1025,14 +1092,14 @@ function startTracking(order){
     <div class="rider-card">
       <div class="rider-em">${courier.e}</div>
       <div class="rider-info"><b>${courier.n}${courier.rare?'<span class="rare-badge">✨ RARE</span>':''}</b><small>${courier.l}</small></div>
-      <button class="call-btn" onclick="showCallToast()">📞</button>
+      <button class="call-btn" onclick="showCallToast()"><i class="bi bi-telephone-fill"></i></button>
     </div>
     <div class="event-line" id="trEvent"></div>
     <ul class="stages" id="trStages">${STAGES.map((s,i)=>`<li data-i="${i}"><span class="sdot">${s[2]}</span>${s[1]}</li>`).join('')}</ul>
     <div class="tip-row">
       <button class="tip-chip" onclick="tipRider()">🪙 tip $1</button>
       <button class="tip-chip" onclick="tipRider()">💵 tip $5</button>
-      <button class="tip-chip" onclick="showCouriers()">🃏 my couriers</button>
+      <button class="tip-chip" onclick="showCouriers()"><i class="bi bi-collection-fill"></i> my couriers</button>
     </div>`;
 
   const rider = modal.querySelector('#trRider');
@@ -1088,7 +1155,7 @@ function renderDelivered(order){
   const modal = document.getElementById('trackerModal');
   modal.innerHTML = `
     <button class="modal-close" onclick="closeTracker()">✕</button>
-    <div class="delivered-em">🎉</div>
+    <div class="delivered-em"><i class="bi bi-gift-fill"></i></div>
     <div class="track-status">Delivered! (in spirit)</div>
     <p class="sub" style="text-align:center;">${order.no} · ${order.items} · ${order.total} · ${order.date}</p>
     <p style="text-align:center;font-family:'Baloo 2',sans-serif;font-weight:700;color:var(--mint);margin:6px 0 14px;">The dopamine has arrived. The food, as promised, has not.</p>
@@ -1097,7 +1164,7 @@ function renderDelivered(order){
       <div class="stall-flags">${cats.map(c=>`<span class="stall-flag ${collected.includes(c.key)?'got':''}">${{chinese:'🥢',malay:'🌴',indian:'🍛',peranakan:'🌺',kopitiam:'☕',western:'🍴'}[c.key]}</span>`).join('')}</div>
     </div>
     <div class="sheet-actions">
-      <button class="btn-ghost" style="border-width:1.5px;" onclick="showCouriers()">🃏 Couriers</button>
+      <button class="btn-ghost" style="border-width:1.5px;" onclick="showCouriers()"><i class="bi bi-collection-fill"></i> Couriers</button>
       <button class="btn-ghost" style="border-width:1.5px;" onclick="closeTracker();scrollToMenu();">Order again</button>
       <button class="btn-primary" onclick="closeTracker()">Done</button>
     </div>`;
@@ -1165,6 +1232,20 @@ initStreak();
 refreshOrdersStat();
 resumeLiveOrder();
 
+// ---------- open dish from a Jasmine "new tab" recommendation link ----------
+function openDishFromHash(){
+  const m = window.location.hash.match(/dish=(\d+)/);
+  if(!m) return;
+  const id = parseInt(m[1]);
+  if(!DISHES.find(x=>x.id===id)) return;
+  try{
+    const card = document.querySelector(`[onclick="openCustomize(${id})"]`);
+    if(card) card.scrollIntoView({behavior:'instant', block:'center'});
+  }catch(e){}
+  setTimeout(()=>openCustomize(id), 150);
+}
+openDishFromHash();
+
 // ---------- testimonial carousel ----------
 const TESTIMONIALS = [
   {stars:5, quote:"Ordered chilli crab at 1am, watched the rider cross my void deck, felt the dopamine, went to sleep. $0 spent. 10/10.", name:"Auntie Bee", role:"Void deck regular"},
@@ -1183,7 +1264,7 @@ function renderTestiCards(){
     card.className = 'testi-card'+(i===0?' active':'');
     card.innerHTML = `<div class="testi-stars">${'★'.repeat(t.stars)}${'☆'.repeat(5-t.stars)}</div>
       <p class="testi-quote">"${t.quote}"</p>
-      <div class="testi-person"><span class="testi-avatar">🧑</span><div style="text-align:left;"><div class="testi-name">${t.name}</div><div class="testi-role">${t.role}</div></div></div>`;
+      <div class="testi-person"><span class="testi-avatar"><i class="bi bi-person-circle"></i></span><div style="text-align:left;"><div class="testi-name">${t.name}</div><div class="testi-role">${t.role}</div></div></div>`;
     track.appendChild(card);
   });
   const dots = document.getElementById('testiDots');
@@ -1200,6 +1281,209 @@ function testiRestart(){ if(testiTimer) clearInterval(testiTimer); testiTimer=se
 renderTestiCards();
 testiRestart();
 
+
+// ---------- Ask Jasmine chatbot ----------
+const JASMINE_CHIPS = [["📍","Food near me"],["🌶️","Something spicy"],["🍜","Noodles"],["🍰","Something sweet"],["🥤","Drinks"],["🎲","Surprise me"]];
+let jasmineOpened = false;
+
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function openJasmine(){
+  document.getElementById('jasminePanel').classList.add('open');
+  document.getElementById('jasmineIntro').classList.remove('show');
+  if(!jasmineOpened){
+    jasmineOpened = true;
+    jasmineBotSay("Hi, I'm Aunty! 🌸 Tell me what you're craving — spicy, noodles, rice, sweet, drinks, cheap, or ATAS — and I'll point you to the right stall. Or ask for <b>food near me</b> and I'll find real places using your actual location 📍");
+    jasmineShowChips();
+  }
+  setTimeout(()=>document.getElementById('jasmineInput').focus(), 100);
+}
+function closeJasmine(){ document.getElementById('jasminePanel').classList.remove('open'); }
+
+function jasmineShowChips(){
+  document.getElementById('jasmineSuggest').innerHTML = JASMINE_CHIPS.map(([e,l])=>
+    `<button class="jasmine-chip" onclick="jasmineAsk('${l.replace(/'/g,"\\'")}')">${e} ${l}</button>`).join('');
+}
+function jasmineAsk(text){ document.getElementById('jasmineInput').value = text; jasmineSend(); }
+
+function jasmineSend(){
+  const inp = document.getElementById('jasmineInput');
+  const text = inp.value.trim();
+  if(!text) return;
+  jasmineUserSay(text);
+  inp.value = '';
+  document.getElementById('jasmineSuggest').innerHTML = '';
+  jasmineTyping(true);
+  setTimeout(()=>jasmineRespond(text), 550 + Math.random()*450);
+}
+
+function jasmineUserSay(text){
+  const body = document.getElementById('jasmineBody');
+  body.insertAdjacentHTML('beforeend', `<div class="jmsg user">${escapeHtml(text)}</div>`);
+  body.scrollTop = body.scrollHeight;
+}
+function jasmineBotSay(text, dishes){
+  const body = document.getElementById('jasmineBody');
+  let html = `<div class="jmsg bot">${text}`;
+  if(dishes && dishes.length){
+    html += `<div class="jmsg-dishes">${dishes.map(d=>
+      `<div class="jmsg-dish" onclick="jasmineGoTo(${d.id})"><img src="${d.img}" alt="" onerror="this.style.display='none'"><div><div class="n">${d.name}</div><div class="p">${money(d.price)} · ${d.stall}</div></div></div>`
+    ).join('')}</div>`;
+  }
+  html += `</div>`;
+  body.insertAdjacentHTML('beforeend', html);
+  body.scrollTop = body.scrollHeight;
+}
+function jasmineTyping(show){
+  const body = document.getElementById('jasmineBody');
+  const existing = document.getElementById('jasmineTypingMsg');
+  if(show){
+    if(existing) return;
+    body.insertAdjacentHTML('beforeend', `<div class="jmsg bot jasmine-typing" id="jasmineTypingMsg"><span></span><span></span><span></span></div>`);
+    body.scrollTop = body.scrollHeight;
+  } else if(existing){ existing.remove(); }
+}
+function jasmineGoTo(id){
+  const d = DISHES.find(x=>x.id===id);
+  const base = window.location.href.split('#')[0];
+  window.open(base + '#dish=' + id, '_blank');
+  if(d) jasmineBotSay(`Opened <b>${escapeHtml(d.name)}</b> in a new tab for you 🔗`);
+}
+
+// ---------- real geolocation + nearby real-world food places ----------
+function haversineKm(lat1,lon1,lat2,lon2){
+  const R = 6371, toRad = x=>x*Math.PI/180;
+  const dLat = toRad(lat2-lat1), dLon = toRad(lon2-lon1);
+  const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+function jasminePlaceMapsUrl(p){
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name+' @'+p.lat+','+p.lon)}`;
+}
+function jasminePlacesSay(intro, places){
+  const body = document.getElementById('jasmineBody');
+  let html = `<div class="jmsg bot">${intro}`;
+  if(places && places.length){
+    html += `<div class="jmsg-dishes">${places.map(p=>
+      `<div class="jmsg-dish jmsg-place" onclick="window.open('${jasminePlaceMapsUrl(p)}','_blank')">
+        <span class="jmsg-place-ico"><i class="bi bi-geo-alt-fill"></i></span>
+        <div><div class="n">${escapeHtml(p.name)}</div><div class="p">${p.dist<1?Math.round(p.dist*1000)+'m':p.dist.toFixed(1)+'km'} away · ${escapeHtml(p.type)}</div></div>
+      </div>`
+    ).join('')}</div>`;
+  }
+  html += `</div>`;
+  body.insertAdjacentHTML('beforeend', html);
+  body.scrollTop = body.scrollHeight;
+}
+function jasmineFindNearby(){
+  jasmineShowChips();
+  if(!navigator.geolocation){
+    jasmineBotSay("Hmm, this browser doesn't support location sharing 😕 You can still ask me for spicy, noodles, sweet, drinks, or budget picks from our menu!");
+    return;
+  }
+  jasmineTyping(true);
+  navigator.geolocation.getCurrentPosition(
+    pos => jasmineNearbyLookup(pos.coords.latitude, pos.coords.longitude),
+    err => {
+      jasmineTyping(false);
+      const msgs = {1:"No worries — looks like location access was declined 🙅 You can enable it in your browser's site settings and ask me again, or just tell me what you're craving from our menu!",
+                    2:"Couldn't pin down your location right now 📡 Mind trying again in a bit?",
+                    3:"That took too long to find you 🐢 Want to try again?"};
+      jasmineBotSay(msgs[err.code] || "Couldn't get your location — but I can still help with our menu! Try asking for spicy, noodles, or drinks.");
+    },
+    {enableHighAccuracy:true, timeout:10000, maximumAge:60000}
+  );
+}
+async function jasmineNearbyLookup(lat, lon){
+  const query = `[out:json][timeout:12];(node["amenity"~"^(restaurant|fast_food|cafe|food_court)$"](around:1200,${lat},${lon}););out body 20;`;
+  try{
+    const controller = new AbortController();
+    const timer = setTimeout(()=>controller.abort(), 11000);
+    const res = await fetch('https://overpass-api.de/api/interpreter?data='+encodeURIComponent(query), {signal:controller.signal});
+    clearTimeout(timer);
+    if(!res.ok) throw new Error('bad response');
+    const data = await res.json();
+    jasmineTyping(false);
+    const places = (data.elements||[])
+      .filter(el=>el.tags && el.tags.name)
+      .map(el=>({name:el.tags.name, type:(el.tags.amenity||'eatery').replace('_',' '), lat:el.lat, lon:el.lon, dist:haversineKm(lat,lon,el.lat,el.lon)}))
+      .sort((a,b)=>a.dist-b.dist)
+      .slice(0,5);
+    if(!places.length){
+      jasmineBotSay("Found your location, but couldn't spot named eateries close by 🗺️ Might be a quiet area — try widening your search on Maps, or ask me about our menu instead!");
+      return;
+    }
+    jasminePlacesSay("Found these real places near you 📍 (tap one to open it in Google Maps):", places);
+  }catch(e){
+    jasmineTyping(false);
+    jasmineBotSay("Got your location, but couldn't reach the map data just now 🌐 Mind trying again in a moment?");
+  }
+}
+
+
+function jasmineRespond(text){
+  jasmineTyping(false);
+  const q = text.toLowerCase();
+  const has = (...words)=>words.some(w=>new RegExp('\\b'+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i').test(q));
+  let matches = [], intro = '';
+
+  if(has('near','nearby','close','around') || q.includes('near me') || q.includes('my location') || q.includes('where should i eat') || q.includes('where can i eat') || q.includes('real place') || q.includes('actual place')){
+    jasmineFindNearby();
+    return;
+  }
+  if(has('hi','hello','hey','sup','yo')){
+    jasmineBotSay("Hey there! 👋 Tell me a craving — spicy, noodles, rice, sweet, drinks, or budget — and I'll find you something.");
+    jasmineShowChips();
+    return;
+  }
+  if(has('thank','thanks','thx')){
+    jasmineBotSay("Anytime! Enjoy the zero-dollar feast 🧾✨");
+    return;
+  }
+  if(has('spicy','chilli','chili','hot','sambal','pedas')){
+    matches = DISHES.filter(d=>/chilli|spic|sambal|mala|curry|rendang/i.test(d.name+' '+d.desc));
+    intro = "Ooh, feeling brave 🌶️ Here's what brings the heat:";
+  } else if(has('noodle','noodles','mee','mian','pasta')){
+    matches = DISHES.filter(d=>/noodle|mee|mian|kway teow|hor fun|laksa/i.test(d.name+' '+d.desc));
+    intro = "Noodle o'clock 🍜 try these:";
+  } else if(has('rice','nasi','biryani')){
+    matches = DISHES.filter(d=>/rice|nasi|biryani/i.test(d.name+' '+d.desc));
+    intro = "Rice, the eternal answer 🍚 how about:";
+  } else if(has('sweet','dessert','cake','ice cream','chocolate','waffle')){
+    matches = DISHES.filter(d=>d.cat==='desserts');
+    intro = "Sweet tooth activated 🍰 try:";
+  } else if(has('drink','thirsty','tea','coffee','kopi','boba','bubble tea','juice','milkshake')){
+    matches = DISHES.filter(d=>d.cat==='drinks');
+    intro = "Stay hydrated (fake-ly) 🥤 how about:";
+  } else if(has('cheap','budget','affordable','under 5','under $5','value')){
+    matches = DISHES.filter(d=>d.price<=5);
+    intro = "Budget-friendly, zero regrets either way 💸";
+  } else if(has('premium','atas','fancy','expensive','luxury','wagyu','splurge')){
+    matches = DISHES.filter(d=>d.cat==='premium');
+    intro = "Feeling fancy 💎 the ATAS tier awaits:";
+  } else if(has('seafood','crab','prawn','fish','lobster','squid','oyster','abalone')){
+    matches = DISHES.filter(d=>/crab|prawn|fish|lobster|squid|seafood|oyster|abalone/i.test(d.name+' '+d.desc));
+    intro = "From the sea 🦀 try:";
+  } else if(has('surprise','random','anything','you choose','you decide','idk',"don't know",'dunno')){
+    matches = DISHES.slice();
+    intro = "Ok, closing my eyes and pointing 🎲 here's your fate:";
+  } else {
+    matches = DISHES.filter(d => (d.name+' '+d.desc+' '+d.stall).toLowerCase().includes(q));
+    if(!matches.length){
+      const words = q.split(/\s+/).filter(w=>w.length>2);
+      matches = DISHES.filter(d => words.some(w=>(d.name+' '+d.desc).toLowerCase().includes(w)));
+    }
+    intro = matches.length ? "Here's what I found:" : "Hmm, couldn't find that exact thing — but here's what's popular right now:";
+    if(!matches.length) matches = DISHES.slice().sort((a,b)=>dishRating(b).stars-dishRating(a).stars);
+  }
+
+  matches = matches.slice().sort(()=>Math.random()-0.5).slice(0,3);
+  jasmineBotSay(intro, matches);
+  jasmineShowChips();
+}
+
+// auto-show intro bubble once, if chat hasn't been opened
+setTimeout(()=>{ if(!jasmineOpened) document.getElementById('jasmineIntro').classList.add('show'); }, 4500);
 
 // ---------- jump to top ----------
 (function(){
