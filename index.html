@@ -65,6 +65,7 @@
   .perks{max-width:1100px;margin:0 auto;padding:30px 24px 50px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
   .perk{background:var(--enamel);border:1.5px solid var(--line);border-radius:var(--radius);padding:18px 20px;}
   .perk .icon{font-size:26px;} .perk h3{font-size:16px;margin:8px 0 4px;} .perk p{margin:0;font-size:14px;color:#5b5448;}
+  .perk-icon-svg svg{width:1em;height:1em;display:block;}
 
   .stat-band{position:relative;height:340px;margin:10px 0 60px;overflow:hidden;}
   .stat-band img{width:100%;height:100%;object-fit:cover;filter:brightness(0.55) saturate(1.05);}
@@ -391,7 +392,16 @@
 
 <div class="perks">
   <div class="perk"><div class="icon"><i class="bi bi-tag-fill"></i></div><h3>50% off, always</h3><p>Every dish, every stall, forever on sale. The discount is as real as the receipt.</p></div>
-  <div class="perk"><div class="icon"><i class="bi bi-truck"></i></div><h3>Free delivery, no minimum</h3><p>No delivery fee, no surge pricing — because there's no delivery.</p></div>
+  <div class="perk"><div class="icon perk-icon-svg">
+    <svg viewBox="0 0 16 16" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+      <circle cx="3.5" cy="12.2" r="1.85" fill="none" stroke="currentColor" stroke-width="1.1"/>
+      <circle cx="12.3" cy="12.2" r="1.85" fill="none" stroke="currentColor" stroke-width="1.1"/>
+      <path d="M4.9 9.6c0-.66.54-1.2 1.2-1.2h3.1c.42 0 .8-.24.98-.62l.9-1.86a1.2 1.2 0 0 1 1.08-.68h.64a.7.7 0 0 1 0 1.4h-.5l-.66 1.36 1.02.9c.34.3.54.73.54 1.18v1.34h-1v-1.14L11 9.9l-.98-.86-.5.9c-.36.64-1.03 1.04-1.77 1.04H6.1a1.2 1.2 0 0 1-1.2-1.2z"/>
+      <circle cx="9.65" cy="2.55" r="1.05"/>
+      <path d="M9.15 3.7c-1.05.55-1.7 1.55-1.7 2.7v1.1h1V6.4c0-.7.4-1.32 1.05-1.65l1-.5a.55.55 0 0 0-.5-.98z"/>
+      <rect x="7.55" y="4.55" width="1.55" height="2" rx="0.5" transform="rotate(18 7.55 4.55)"/>
+    </svg>
+  </div><h3>Free delivery, no minimum</h3><p>No delivery fee, no surge pricing — because there's no delivery.</p></div>
   <div class="perk"><div class="icon"><i class="bi bi-receipt"></i></div><h3>Zero-dollar chit</h3><p>Your total climbs like the real thing. Your bank account doesn't move an inch.</p></div>
 </div>
 
