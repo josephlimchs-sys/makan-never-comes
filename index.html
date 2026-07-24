@@ -322,7 +322,6 @@
   .jmsg-dish{display:flex;align-items:center;gap:10px;background:var(--enamel);border:1.5px solid var(--line);border-radius:12px;padding:7px;cursor:pointer;text-align:left;}
   .jmsg-dish:hover{border-color:var(--teal);}
   .jmsg-dish img{width:42px;height:42px;border-radius:8px;object-fit:cover;flex-shrink:0;}
-  .jmsg-place-ico{width:42px;height:42px;border-radius:8px;background:var(--cream);color:var(--red);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
   .jmsg-dish .n{font-family:'Baloo 2', sans-serif;font-weight:700;font-size:12.5px;}
   .jmsg-dish .p{font-family:'Space Mono', monospace;font-size:11.5px;color:var(--teal-dark);}
   .jasmine-typing span{display:inline-block;width:6px;height:6px;background:#8a8074;border-radius:50%;margin-right:3px;animation:jtyping 1s infinite;}
@@ -1286,7 +1285,7 @@ testiRestart();
 
 
 // ---------- Ask Jasmine chatbot ----------
-const JASMINE_CHIPS = [["📍","Food near me"],["🌶️","Something spicy"],["🍜","Noodles"],["🍰","Something sweet"],["🥤","Drinks"],["🎲","Surprise me"]];
+const JASMINE_CHIPS = [["🌶️","Something spicy"],["🍜","Noodles"],["🍰","Something sweet"],["🥤","Drinks"],["🎲","Surprise me"]];
 let jasmineOpened = false;
 
 function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
@@ -1296,7 +1295,7 @@ function openJasmine(){
   document.getElementById('jasmineIntro').classList.remove('show');
   if(!jasmineOpened){
     jasmineOpened = true;
-    jasmineBotSay("Hi, I'm Aunty! 🌸 Tell me what you're craving — spicy, noodles, rice, sweet, drinks, cheap, or ATAS — and I'll point you to the right stall. Or ask for <b>food near me</b> and I'll find real places using your actual location 📍");
+    jasmineBotSay("Hi, I'm Aunty! 🌸 Tell me what you're craving — spicy, noodles, rice, sweet, drinks, cheap, or ATAS — and I'll point you to the right stall.");
     jasmineShowChips();
   }
   setTimeout(()=>document.getElementById('jasmineInput').focus(), 100);
@@ -1309,10 +1308,6 @@ function jasmineShowChips(){
 }
 function jasmineAsk(text){ document.getElementById('jasmineInput').value = text; jasmineSend(); }
 
-function isNearMeQuery(q){
-  const has = (...words)=>words.some(w=>new RegExp('\\b'+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i').test(q));
-  return has('near','nearby','close','around') || q.includes('near me') || q.includes('my location') || q.includes('where should i eat') || q.includes('where can i eat') || q.includes('real place') || q.includes('actual place');
-}
 function jasmineSend(){
   const inp = document.getElementById('jasmineInput');
   const text = inp.value.trim();
@@ -1320,14 +1315,6 @@ function jasmineSend(){
   jasmineUserSay(text);
   inp.value = '';
   document.getElementById('jasmineSuggest').innerHTML = '';
-
-  // Geolocation must be requested synchronously within the user gesture (click/tap/enter),
-  // or browsers silently auto-deny it. So we skip the artificial typing delay for this intent
-  // and call it immediately, rather than routing it through the delayed jasmineRespond().
-  if(isNearMeQuery(text.toLowerCase())){
-    jasmineFindNearby();
-    return;
-  }
 
   jasmineTyping(true);
   setTimeout(()=>jasmineRespond(text), 550 + Math.random()*450);
@@ -1366,85 +1353,12 @@ function jasmineGoTo(id){
   if(d) jasmineBotSay(`Opened <b>${escapeHtml(d.name)}</b> in a new tab for you 🔗`);
 }
 
-// ---------- real geolocation + nearby real-world food places ----------
-function haversineKm(lat1,lon1,lat2,lon2){
-  const R = 6371, toRad = x=>x*Math.PI/180;
-  const dLat = toRad(lat2-lat1), dLon = toRad(lon2-lon1);
-  const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-}
-function jasminePlaceMapsUrl(p){
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name+' @'+p.lat+','+p.lon)}`;
-}
-function jasminePlacesSay(intro, places){
-  const body = document.getElementById('jasmineBody');
-  let html = `<div class="jmsg bot">${intro}`;
-  if(places && places.length){
-    html += `<div class="jmsg-dishes">${places.map(p=>
-      `<div class="jmsg-dish jmsg-place" onclick="window.open('${jasminePlaceMapsUrl(p)}','_blank')">
-        <span class="jmsg-place-ico"><i class="bi bi-geo-alt-fill"></i></span>
-        <div><div class="n">${escapeHtml(p.name)}</div><div class="p">${p.dist<1?Math.round(p.dist*1000)+'m':p.dist.toFixed(1)+'km'} away · ${escapeHtml(p.type)}</div></div>
-      </div>`
-    ).join('')}</div>`;
-  }
-  html += `</div>`;
-  body.insertAdjacentHTML('beforeend', html);
-  body.scrollTop = body.scrollHeight;
-}
-function jasmineFindNearby(){
-  jasmineShowChips();
-  if(!navigator.geolocation){
-    jasmineBotSay("Hmm, this browser doesn't support location sharing 😕 You can still ask me for spicy, noodles, sweet, drinks, or budget picks from our menu!");
-    return;
-  }
-  jasmineTyping(true);
-  navigator.geolocation.getCurrentPosition(
-    pos => jasmineNearbyLookup(pos.coords.latitude, pos.coords.longitude),
-    err => {
-      jasmineTyping(false);
-      const msgs = {1:"No worries — looks like location access was declined 🙅 You can enable it in your browser's site settings and ask me again, or just tell me what you're craving from our menu!",
-                    2:"Couldn't pin down your location right now 📡 Mind trying again in a bit?",
-                    3:"That took too long to find you 🐢 Want to try again?"};
-      jasmineBotSay(msgs[err.code] || "Couldn't get your location — but I can still help with our menu! Try asking for spicy, noodles, or drinks.");
-    },
-    {enableHighAccuracy:true, timeout:10000, maximumAge:60000}
-  );
-}
-async function jasmineNearbyLookup(lat, lon){
-  try{
-    const controller = new AbortController();
-    const timer = setTimeout(()=>controller.abort(), 9000);
-    const res = await fetch(`/api/nearby?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}`, {signal:controller.signal});
-    clearTimeout(timer);
-    if(!res.ok) throw new Error('bad response '+res.status);
-    const data = await res.json();
-    jasmineTyping(false);
-    const places = (data.places||[])
-      .map(p=>({name:p.name, type:p.type||'eatery', lat:p.lat, lon:p.lon, dist:haversineKm(lat,lon,p.lat,p.lon)}))
-      .sort((a,b)=>a.dist-b.dist)
-      .slice(0,5);
-    if(!places.length){
-      jasmineBotSay("Found your location, but couldn't spot named eateries close by 🗺️ Might be a quiet area — try widening your search on Maps, or ask me about our menu instead!");
-      return;
-    }
-    jasminePlacesSay("Found these real places near you 📍 (tap one to open it in Google Maps):", places);
-  }catch(e){
-    jasmineTyping(false);
-    jasmineBotSay("Got your location, but couldn't reach the map data just now 🌐 Mind trying again in a moment?");
-  }
-}
-
-
 function jasmineRespond(text){
   jasmineTyping(false);
   const q = text.toLowerCase();
   const has = (...words)=>words.some(w=>new RegExp('\\b'+w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i').test(q));
   let matches = [], intro = '';
 
-  if(isNearMeQuery(q)){
-    jasmineFindNearby();
-    return;
-  }
   if(has('hi','hello','hey','sup','yo')){
     jasmineBotSay("Hey there! 👋 Tell me a craving — spicy, noodles, rice, sweet, drinks, or budget — and I'll find you something.");
     jasmineShowChips();

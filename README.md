@@ -4,27 +4,7 @@ A Singapore hawker-themed "dopamine site" — browse hawker classics, customise 
 spice level, "pay" with a fake NETS card, and track a live courier crossing the
 void deck. No real food, no real payment.
 
-Static site — a single `index.html`, no build step, no dependencies — plus one
-serverless function (`api/nearby.js`) that proxies Google Places API for the
-"food near me" feature, so your API key never reaches the browser.
-
-## "Food near me" setup (Google Places API)
-1. In Google Cloud Console, enable **"Places API (New)"** for a project and
-   create an API key.
-2. Restrict the key (Application restrictions -> None needed since it's only
-   ever called server-side now; API restrictions -> limit to Places API (New)
-   for safety).
-3. In your Vercel project: **Settings -> Environment Variables**, add:
-   - Name: `GOOGLE_PLACES_API_KEY`
-   - Value: your key
-   - Apply to Production (and Preview if you want it working on preview URLs)
-4. Redeploy. The site calls `/api/nearby?lat=...&lon=...`, which runs
-   `api/nearby.js` on Vercel's servers, calls Google with the hidden key, and
-   returns just the place data to the browser.
-
-No billing surprises expected for normal testing — Google gives $200/month
-free credit, which covers a large number of Nearby Search calls for a small
-site like this.
+Static site — a single `index.html`, no build step, no dependencies.
 
 ## Deploy to Vercel
 
