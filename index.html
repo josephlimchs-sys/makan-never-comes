@@ -1411,18 +1411,16 @@ function jasmineFindNearby(){
   );
 }
 async function jasmineNearbyLookup(lat, lon){
-  const query = `[out:json][timeout:12];(node["amenity"~"^(restaurant|fast_food|cafe|food_court)$"](around:1200,${lat},${lon}););out body 20;`;
   try{
     const controller = new AbortController();
-    const timer = setTimeout(()=>controller.abort(), 11000);
-    const res = await fetch('https://overpass-api.de/api/interpreter?data='+encodeURIComponent(query), {signal:controller.signal});
+    const timer = setTimeout(()=>controller.abort(), 9000);
+    const res = await fetch(`/api/nearby?lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}`, {signal:controller.signal});
     clearTimeout(timer);
-    if(!res.ok) throw new Error('bad response');
+    if(!res.ok) throw new Error('bad response '+res.status);
     const data = await res.json();
     jasmineTyping(false);
-    const places = (data.elements||[])
-      .filter(el=>el.tags && el.tags.name)
-      .map(el=>({name:el.tags.name, type:(el.tags.amenity||'eatery').replace('_',' '), lat:el.lat, lon:el.lon, dist:haversineKm(lat,lon,el.lat,el.lon)}))
+    const places = (data.places||[])
+      .map(p=>({name:p.name, type:p.type||'eatery', lat:p.lat, lon:p.lon, dist:haversineKm(lat,lon,p.lat,p.lon)}))
       .sort((a,b)=>a.dist-b.dist)
       .slice(0,5);
     if(!places.length){

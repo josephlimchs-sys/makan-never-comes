@@ -1,0 +1,85 @@
+// Vercel serverless function: proxies Google Places API "Nearby Search"
+// so the API key never reaches the client. Set GOOGLE_PLACES_API_KEY in
+// Vercel Project Settings -> Environment Variables.
+
+export default async function handler(req, res) {
+  // CORS: only really needed if you ever call this from another origin.
+  // Since this is same-origin (site + api both on your Vercel domain),
+  // we keep it locked down rather than wide open.
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  if (req.method === 'OPTIONS') {
+    res.status(204).end();
+    return;
+  }
+  if (req.method !== 'GET') {
+    res.status(405).json({ error: 'Method not allowed' });
+    return;
+  }
+
+  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+  if (!apiKey) {
+    res.status(500).json({ error: 'Server is missing GOOGLE_PLACES_API_KEY' });
+    return;
+  }
+
+  const lat = parseFloat(req.query.lat);
+  const lon = parseFloat(req.query.lon);
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+    res.status(400).json({ error: 'lat and lon query params are required numbers' });
+    return;
+  }
+
+  const body = {
+    includedTypes: ['restaurant', 'cafe', 'fast_food_restaurant'],
+    maxResultCount: 8,
+    locationRestriction: {
+      circle: {
+        center: { latitude: lat, longitude: lon },
+        radius: 1200.0
+      }
+    }
+  };
+
+  // Give Google ~8s to respond, then fail cleanly so the client can show
+  // its own friendly fallback message instead of hanging.
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+
+  try {
+    const googleRes = await fetch('https://places.googleapis.com/v1/places:searchNearby', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': apiKey,
+        'X-Goog-FieldMask': 'places.displayName,places.location,places.primaryType,places.types'
+      },
+      body: JSON.stringify(body),
+      signal: controller.signal
+    });
+    clearTimeout(timer);
+
+    if (!googleRes.ok) {
+      const errText = await googleRes.text().catch(() => '');
+      res.status(502).json({ error: 'Upstream places lookup failed', status: googleRes.status, detail: errText.slice(0, 300) });
+      return;
+    }
+
+    const data = await googleRes.json();
+    const places = (data.places || [])
+      .filter(p => p.displayName && p.location)
+      .map(p => ({
+        name: p.displayName.text || p.displayName,
+        type: (p.primaryType || (p.types && p.types[0]) || 'eatery').replace(/_/g, ' '),
+        lat: p.location.latitude,
+        lon: p.location.longitude
+      }));
+
+    // Cache for 60s at the edge/CDN so repeated nearby lookups from the
+    // same area don't all hit Google individually.
+    res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=30');
+    res.status(200).json({ places });
+  } catch (e) {
+    clearTimeout(timer);
+    res.status(504).json({ error: 'Timed out or failed reaching Google Places', detail: String(e && e.message || e) });
+  }
+}
