@@ -97,6 +97,14 @@
   .trend-meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#8a8074;}
   .trend-meta b{font-family:'Space Mono', monospace;color:var(--teal-dark);font-size:16px;}
   @media (max-width:560px){ .trend-card{width:190px;} }
+
+  .cat-quicknav{max-width:1100px;margin:0 auto;padding:0 24px 40px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  .cat-card{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;background:var(--enamel);border:1.5px solid var(--line);border-radius:16px;padding:20px 12px;cursor:pointer;font-family:'Work Sans', sans-serif;transition:transform 0.15s, border-color 0.15s;}
+  .cat-card:hover{transform:translateY(-3px);border-color:var(--teal);}
+  .cat-card-ico{font-size:30px;line-height:1;margin-bottom:6px;}
+  .cat-card-n{font-family:'Baloo 2', sans-serif;font-weight:700;font-size:14.5px;color:var(--ink);}
+  .cat-card-p{font-family:'Space Mono', monospace;font-size:11px;color:var(--teal-dark);}
+  @media (max-width:700px){ .cat-quicknav{grid-template-columns:repeat(2,1fr);} }
   .dish-card{background:var(--enamel);border:1.5px solid var(--line);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 14px rgba(36,31,26,0.05);transition:transform 0.15s, box-shadow 0.15s;}
   .dish-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(36,31,26,0.1);}
   .dish-photo{width:100%;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:var(--cream);position:relative;}
@@ -401,6 +409,29 @@
 </div>
 <div class="trend-wrap">
   <div class="trend-track" id="trendTrack"></div>
+</div>
+
+<div class="cat-quicknav" id="catQuicknav">
+  <button class="cat-card" onclick="scrollToMenu()">
+    <span class="cat-card-ico">🍜</span>
+    <span class="cat-card-n">The Hawker Centre</span>
+    <span class="cat-card-p">33 dishes · 6 cuisines</span>
+  </button>
+  <button class="cat-card" onclick="scrollToRestaurant()">
+    <span class="cat-card-ico">💎</span>
+    <span class="cat-card-n">The Restaurant</span>
+    <span class="cat-card-p">20 dishes · ATAS tier</span>
+  </button>
+  <button class="cat-card" onclick="scrollToDrinks()">
+    <span class="cat-card-ico">🥤</span>
+    <span class="cat-card-n">The Drink Store</span>
+    <span class="cat-card-p">8 drinks · kopi &amp; more</span>
+  </button>
+  <button class="cat-card" onclick="scrollToDesserts()">
+    <span class="cat-card-ico">🍰</span>
+    <span class="cat-card-n">The Dessert Bar</span>
+    <span class="cat-card-p">8 desserts · zero guilt</span>
+  </button>
 </div>
 
 <div class="section" id="menu-section">
@@ -1196,6 +1227,9 @@ function refreshOrdersStat(){
 window._bumpOrdersStat = refreshOrdersStat;
 
 function scrollToMenu(){ document.getElementById('menu-section').scrollIntoView({behavior:'smooth'}); }
+function scrollToRestaurant(){ document.getElementById('restaurant-section').scrollIntoView({behavior:'smooth'}); }
+function scrollToDrinks(){ document.getElementById('drinks-section').scrollIntoView({behavior:'smooth'}); }
+function scrollToDesserts(){ document.getElementById('desserts-section').scrollIntoView({behavior:'smooth'}); }
 function scrollToHow(){ document.getElementById('how-section').scrollIntoView({behavior:'smooth'}); }
 
 // resume any live order automatically on load
